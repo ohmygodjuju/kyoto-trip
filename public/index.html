@@ -30,12 +30,10 @@ a{color:inherit}
 header{padding:calc(28px + env(safe-area-inset-top)) 0 8px;position:relative}
 header h1{font-size:26px;line-height:1.25;letter-spacing:.02em}
 header p{color:var(--sub);font-size:14px;margin-top:4px}
-header .stk{position:absolute;right:0;top:calc(20px + env(safe-area-inset-top));width:84px;height:84px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px}
 section{margin-top:26px}
 h2{font-size:18px;margin:0 0 12px;display:flex;align-items:center;gap:8px;letter-spacing:.02em}
 h2 .bar{width:6px;height:20px;border-radius:3px;background:var(--g)}
-h2 svg{width:30px;height:30px;margin-left:auto}
 /* hero */
 .hero{background:linear-gradient(160deg,var(--g-soft),var(--card) 70%);margin-top:14px}
 .hero .lab{font-size:12px;letter-spacing:.14em;color:var(--g-d);font-weight:700}
@@ -104,23 +102,27 @@ li.sp{background:linear-gradient(90deg,var(--warn-soft),transparent 60%);margin:
 .tips li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--lav)}
 .tips b{color:var(--g-d)}
 footer{text-align:center;margin-top:34px;color:var(--sub);font-size:13px}
-footer svg{width:64px;height:64px;display:block;margin:0 auto 6px}
+
+nav.top{position:sticky;top:0;z-index:50;margin:0 -16px;padding:calc(8px + env(safe-area-inset-top)) 16px 8px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.top ul{list-style:none;padding:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;max-width:680px;margin:0 auto}
+nav.top ul::-webkit-scrollbar{display:none}
+nav.top a{display:block;white-space:nowrap;text-decoration:none;font-size:14px;font-weight:600;padding:6px 13px;border-radius:999px;color:var(--sub)}
+nav.top a.on{background:var(--g);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav.top a.on{color:#14200c}}
+section,#hero{scroll-margin-top:64px}
+header{padding-top:20px}
+.mapwrap{position:relative;border-radius:14px;overflow:hidden;touch-action:none;background:#efe9d6}
+.mapwrap svg{width:100%;height:auto;display:block;aspect-ratio:372/400;cursor:grab}
+.zoom{position:absolute;right:10px;bottom:10px;display:grid;gap:8px}
+.zoom button{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;box-shadow:var(--shadow)}
+.compass{position:absolute;right:10px;top:10px;width:42px;height:42px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--sub);box-shadow:var(--shadow)}
+.mapwrap .hint{position:absolute;left:10px;bottom:8px;font-size:11px;color:var(--sub);background:color-mix(in srgb,var(--card) 80%,transparent);padding:2px 8px;border-radius:8px}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-<defs>
-<symbol id="s-cup" viewBox="0 0 80 80"><g stroke="#2f4a1d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M14 30h46v10c0 14-9 24-23 24S14 54 14 40z" fill="#b9d98b"/><path d="M60 34h4a7 7 0 010 14h-6" fill="none"/><path d="M18 30c4-5 36-5 40 0" fill="#7fae4a"/><path d="M30 14c-3 4 3 6 0 10M42 12c-3 4 3 6 0 10" fill="none"/></g></symbol>
-<symbol id="s-whisk" viewBox="0 0 80 80"><g stroke="#2f4a1d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><rect x="31" y="6" width="14" height="30" rx="6" fill="#d9c28a"/><path d="M31 34c-14 8-12 34 7 36 19-2 21-28 7-36z" fill="#eadfb8"/><path d="M38 36v32M33 38c-4 8-3 20 5 30M43 38c4 8 3 20-5 30" fill="none"/></g></symbol>
-<symbol id="s-bowl" viewBox="0 0 80 80"><g stroke="#2f4a1d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M8 34h64c0 20-12 34-32 34S8 54 8 34z" fill="#c9bdf0"/><ellipse cx="40" cy="34" rx="32" ry="7" fill="#9fcc63"/><path d="M24 74h32" fill="none"/></g></symbol>
-<symbol id="s-pot" viewBox="0 0 80 80"><g stroke="#2f4a1d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M18 36c0-10 8-16 22-16s22 6 22 16v18c0 8-8 12-22 12s-22-4-22-12z" fill="#b9d98b"/><path d="M62 34c10-2 14 6 8 12l-8 4" fill="none"/><path d="M18 40c-8-2-10 10-2 12" fill="none"/><path d="M34 20c0-6 12-6 12 0" fill="#7fae4a"/><circle cx="40" cy="12" r="3" fill="#7fae4a"/></g></symbol>
-<symbol id="s-tumbler" viewBox="0 0 80 80"><g stroke="#2f4a1d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M22 20h36l-5 50H27z" fill="#d6ccf3"/><path d="M20 14h40v8H20z" fill="#b7a7e0"/><path d="M36 14l4-8 12 0" fill="none"/><path d="M26 44h28" fill="none"/></g></symbol>
-</defs>
-</svg>
-
+<nav class="top"><ul id="navl"><li><a href="#hero">此刻</a></li><li><a href="#map-sec">路線</a></li><li><a href="#bookings">預訂</a></li><li><a href="#days">行程</a></li><li><a href="#todo">待辦</a></li><li><a href="#tips">提醒</a></li></ul></nav>
 <div class="wrap">
 <header>
-  <svg class="stk" aria-hidden="true"><use href="#s-cup"/></svg>
   <h1>京都・宇治・大阪<br>旅行手冊</h1>
   <p>2026/12/18（五）– 12/22（二） ・ 2 人 ・ 抹茶、逛街、散步</p>
 </header>
@@ -128,11 +130,11 @@ footer svg{width:64px;height:64px;display:block;margin:0 auto 6px}
 <div id="hero" class="card hero"></div>
 
 <section id="map-sec">
-  <h2><span class="bar"></span>路線總覽<svg aria-hidden="true"><use href="#s-whisk"/></svg></h2>
+  <h2><span class="bar"></span>路線總覽</h2>
   <div class="card mapbox">
-    <svg viewBox="0 0 360 320" role="img" aria-label="京都、宇治、大阪與關西機場的路線示意圖" id="overview"></svg>
+    <div class="mapwrap" id="mapwrap"><svg viewBox="0 0 372 400" role="img" aria-label="京都、宇治、大阪與關西機場的路線圖" id="overview"></svg><div class="compass" aria-hidden="true">北 ↑</div><div class="zoom"><button type="button" id="zin" aria-label="放大">+</button><button type="button" id="zout" aria-label="縮小">−</button></div></div>
     <div class="legend" id="legend"></div>
-    <p class="note">手繪示意圖，非實際比例。本行程不搭新幹線，圖上標示的是實際使用的 JR 與地鐵路線。</p>
+    <p class="note">路線依實際座標簡化繪製，可拖曳、放大查看。本行程不搭新幹線，使用的是 JR（Haruka、奈良線、京都線）與大阪地鐵御堂筋線。</p>
   </div>
 </section>
 
@@ -158,12 +160,11 @@ footer svg{width:64px;height:64px;display:block;margin:0 auto 6px}
 </section>
 
 <section id="tips">
-  <h2><span class="bar"></span>實用小提醒<svg aria-hidden="true"><use href="#s-tumbler"/></svg></h2>
+  <h2><span class="bar"></span>實用小提醒</h2>
   <div class="card"><ul class="tips" id="tiplist"></ul></div>
 </section>
 
 <footer>
-  <svg aria-hidden="true"><use href="#s-pot"/></svg>
   旅途愉快，記得多買一點抹茶。
 </footer>
 </div>
@@ -396,46 +397,76 @@ function renderDays(){
 }
 
 /* ================= OVERVIEW MAP ================= */
-function renderOverview(){
-  var N={kix:[55,278],osaka:[105,198],kyoto:[205,52],uji:[268,150]};
-  var s='';
-  /* water hint */
-  s+='<path d="M0 230 C40 215 70 250 90 300 L0 320Z" fill="var(--lav-soft)" opacity=".7"/>';
-  s+='<text x="12" y="300" font-size="10" fill="var(--sub)">大阪灣</text>';
-  var L=function(c,d,dash){return '<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"'+(dash?' stroke-dasharray="1 9"':'')+'/>'};
-  s+=L(COLORS[0],"M55,278 Q95,250 112,205 L150,150 L212,58");
-  s+=L(COLORS[1],"M196,60 q-14,16 0,26 q18,6 22,-12",true);
-  s+=L(COLORS[2],"M214,50 L276,146 M198,58 L98,192");
-  s+=L(COLORS[3],"M96,196 q-10,14 6,22 q16,6 20,-10 q-2,-16 -26,-12",true);
-  s+=L(COLORS[4],"M118,206 L156,158 L66,282 M118,206 L132,176");
-  /* labels on lines */
-  s+='<g font-size="10" fill="var(--ink)" stroke="var(--bg)" stroke-width="3" paint-order="stroke">';
-  s+='<text x="130" y="262">JR Haruka</text><text x="150" y="108" text-anchor="start">JR Haruka</text>';
-  s+='<text x="248" y="112">JR 奈良線</text><text x="102" y="130" text-anchor="end">JR 京都線</text>';
-  s+='<text x="168" y="196">御堂筋線</text>';
+var MW=372,MH=400,S0=526,LN0=135.12,LA0=35.12,KX=Math.cos(34.8*Math.PI/180);
+function mp(ll){return [(ll[1]-LN0)*KX*S0,(LA0-ll[0])*S0]}
+function poly(pts){return pts.map(function(q,i){var a=mp(q);return (i?"L":"M")+a[0].toFixed(1)+","+a[1].toFixed(1)}).join(" ")+"Z"}
+var BAY=[[34.30,135.05],[34.30,135.27],[34.41,135.30],[34.50,135.36],[34.58,135.45],[34.65,135.43],[34.72,135.40],[34.73,135.33],[34.69,135.19],[34.63,135.05]];
+var BIWA=[[35.14,135.94],[35.14,135.86],[35.07,135.84],[35.01,135.85],[34.99,135.88],[35.02,135.92],[35.07,135.94]];
+var ROUTES=[
+ [[34.432,135.230],[34.43,135.29],[34.50,135.35],[34.5800,135.4600],[34.6467,135.5139],[34.7025,135.4959],[34.7335,135.5002],[34.9858,135.7588],[35.0037,135.7689]],
+ [[35.0037,135.7689],[35.0100,135.7650],[35.0105,135.7690],[35.0037,135.7694],[35.0037,135.7689]],
+ [[35.0037,135.7689],[34.9858,135.7588],[34.8893,135.8076],[34.8896,135.7990],[34.9858,135.7540],[34.7025,135.4930],[34.6650,135.4975]],
+ [[34.6650,135.4975],[34.6873,135.5262],[34.6542,135.5164],[34.6525,135.5063],[34.6727,135.4985],[34.6618,135.4965],[34.6687,135.5013]],
+ [[34.6650,135.4975],[34.6643,135.5064],[34.7335,135.5002],[34.7260,135.4950],[34.7335,135.5002],[34.6467,135.5139],[34.4320,135.2304]]
+];
+var LBL=[ /* name, ll, dx, dy, anchor, minor */
+ ["京都",[34.9858,135.7588],-6,-6,"end",0],["宇治",[34.8893,135.8076],6,4,"start",0],["大阪",[34.7025,135.4959],-7,-4,"end",0],
+ ["新大阪",[34.7335,135.5002],7,3,"start",0],["難波",[34.6650,135.4975],-8,12,"end",0],["關西機場",[34.4320,135.2304],8,4,"start",0],
+ ["大阪城",[34.6873,135.5262],7,4,"start",1],["四天王寺",[34.6542,135.5164],7,4,"start",1],["通天閣",[34.6525,135.5063],7,10,"start",1],
+ ["黑門市場",[34.6643,135.5064],7,0,"start",1],["Tightbooth",[34.7260,135.4950],-7,4,"end",1],["一保堂",[35.0124,135.7667],-7,-3,"end",1],
+ ["YUGEN",[35.0100,135.7650],-7,4,"end",1],["蟹道樂",[35.0105,135.7690],7,-4,"start",1],["中村藤吉",[34.8903,135.8070],7,-6,"start",1]
+];
+var view={z:1,cx:MW/2,cy:MH/2};
+function clampView(){var vw=MW/view.z,vh=MH/view.z;view.cx=Math.min(Math.max(view.cx,vw/2),MW-vw/2);view.cy=Math.min(Math.max(view.cy,vh/2),MH-vh/2)}
+function drawMap(){
+  clampView();var z=view.z,vw=MW/z,vh=MH/z,x0=view.cx-vw/2,y0=view.cy-vh/2;
+  var el=$("overview");el.setAttribute("viewBox",x0.toFixed(1)+" "+y0.toFixed(1)+" "+vw.toFixed(1)+" "+vh.toFixed(1));
+  var fs=function(n){return (n/z).toFixed(2)};
+  var s='<rect x="0" y="0" width="'+MW+'" height="'+MH+'" fill="#f1ecd9"/>';
+  s+='<path d="'+poly(BAY)+'" fill="#cfe3ec" stroke="#a9c7d4" stroke-width="1" vector-effect="non-scaling-stroke"/>';
+  s+='<path d="'+poly(BIWA)+'" fill="#cfe3ec" stroke="#a9c7d4" stroke-width="1" vector-effect="non-scaling-stroke"/>';
+  s+='<text x="'+mp([34.46,135.12])[0]+'" y="'+mp([34.46,135.12])[1]+'" font-size="'+fs(11)+'" fill="#6f95a6" font-style="italic">大阪灣</text>';
+  s+='<text x="'+mp([35.08,135.88])[0]+'" y="'+mp([35.08,135.88])[1]+'" font-size="'+fs(11)+'" fill="#6f95a6" font-style="italic" text-anchor="middle">琵琶湖</text>';
+  ROUTES.forEach(function(r,i){
+    s+='<path d="'+r.map(function(q,j){var a=mp(q);return (j?"L":"M")+a[0].toFixed(1)+","+a[1].toFixed(1)}).join(" ")+'" fill="none" stroke="'+DAYC[i]+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"'+(i===4?' stroke-dasharray="6 4"':'')+'/>';
+  });
+  /* small stop dots */
+  Object.keys(P).forEach(function(k){var a=mp(P[k].ll);if(k==="tpe")return;s+='<circle cx="'+a[0].toFixed(1)+'" cy="'+a[1].toFixed(1)+'" r="'+fs(2.2)+'" fill="var(--card)" stroke="#5a6652" stroke-width="'+fs(1)+'"/>'});
+  /* labels */
+  s+='<g font-weight="700" stroke="#f1ecd9" stroke-width="'+fs(3)+'" paint-order="stroke" fill="#2a3325">';
+  LBL.forEach(function(l){if(l[5]&&z<2)return;var a=mp(l[1]);s+='<text x="'+(a[0]+l[2]/z).toFixed(1)+'" y="'+(a[1]+l[3]/z).toFixed(1)+'" font-size="'+fs(l[5]?10:12)+'" text-anchor="'+l[4]+'"'+(l[5]?' font-weight="500"':'')+'>'+l[0]+'</text>'});
   s+='</g>';
-  /* nodes */
-  var node=function(x,y,label,dx,dy,anc){return '<circle cx="'+x+'" cy="'+y+'" r="6" fill="var(--card)" stroke="var(--ink)" stroke-width="2.5"/><text x="'+(x+dx)+'" y="'+(y+dy)+'" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="'+(anc||"start")+'" stroke="var(--bg)" stroke-width="3.5" paint-order="stroke">'+label+'</text>'};
-  s+=node(N.kix[0],N.kix[1],"關西機場",10,4);
-  s+=node(N.osaka[0],N.osaka[1],"大阪",-12,5,"end");
-  s+=node(N.kyoto[0],N.kyoto[1],"京都",-12,-8,"end");
-  s+=node(268,150,"宇治",12,5);
-  s+=node(150,152,"新大阪",-10,4,"end");
-  /* lodging flags */
-  var bed=function(x,y,t){return '<g transform="translate('+x+','+y+')"><rect x="-1" y="-22" width="64" height="20" rx="10" fill="var(--g)"/><text x="31" y="-8" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">'+t+'</text></g>'};
-  s+=bed(226,26,"住 12/18–20");
-  s+=bed(120,252,"住 12/20–22");
-  /* sticker accent */
-  s+='<g transform="translate(270,228)"><use href="#s-bowl" width="70" height="70"/></g>';
-  $("overview").innerHTML=s;
-  var lg="";
-  ROUTE_LABELS.forEach(function(t,i){lg+='<span><i style="background:'+COLORS[i]+'"></i>'+esc(t)+'</span>'});
+  /* house markers */
+  var house=function(ll,txt,col,dy){var a=mp(ll),r=fs(11);
+    return '<g transform="translate('+a[0].toFixed(1)+','+a[1].toFixed(1)+')"><rect x="'+(-11/z)+'" y="'+(-11/z)+'" width="'+(22/z)+'" height="'+(22/z)+'" rx="'+(6/z)+'" fill="#fff" stroke="'+col+'" stroke-width="'+fs(2)+'"/>'+
+    '<path d="M'+(-6/z)+','+(1/z)+' L0,'+(-6/z)+' L'+(6/z)+','+(1/z)+' M'+(-4.5/z)+','+(0)+' V'+(6/z)+' H'+(4.5/z)+' V0" fill="none" stroke="'+col+'" stroke-width="'+fs(1.8)+'" stroke-linejoin="round" stroke-linecap="round"/>'+
+    '<text x="0" y="'+(dy/z)+'" font-size="'+fs(10.5)+'" font-weight="700" text-anchor="middle" fill="#2a3325" stroke="#f1ecd9" stroke-width="'+fs(3)+'" paint-order="stroke">'+txt+'</text></g>'};
+  s+=house(P.hk.ll,"D1·D2",DAYC[0],-16);
+  s+=house(P.hosaka.ll,"D3·D4",DAYC[3],26);
+  /* airport */
+  var k=mp(P.kix.ll);s+='<g transform="translate('+k[0].toFixed(1)+','+k[1].toFixed(1)+')"><text x="0" y="'+(-9/z)+'" font-size="'+fs(10.5)+'" font-weight="700" text-anchor="middle" fill="#2a3325" stroke="#f1ecd9" stroke-width="'+fs(3)+'" paint-order="stroke">D1·D5</text></g>';
+  el.innerHTML=s;
+}
+var DAYC=["#e2725b","#d9a441","#4f8a2e","#3f88b3","#8a77c4"];
+function renderOverview(){
+  drawMap();
+  var lg="";ROUTE_LABELS.forEach(function(t,i){lg+='<span><i style="background:'+DAYC[i]+';height:3px"></i>'+esc(t)+'</span>'});
   $("legend").innerHTML=lg;
+  var w=$("mapwrap"),drag=null;
+  $("zin").onclick=function(){view.z=Math.min(5,view.z*1.6);drawMap()};
+  $("zout").onclick=function(){view.z=Math.max(1,view.z/1.6);drawMap()};
+  w.addEventListener("pointerdown",function(e){if(e.target.closest(".zoom"))return;drag={x:e.clientX,y:e.clientY};try{w.setPointerCapture(e.pointerId)}catch(_){}});
+  w.addEventListener("pointermove",function(e){if(!drag)return;var r=$("overview").getBoundingClientRect(),k=(MW/view.z)/r.width;view.cx-=(e.clientX-drag.x)*k;view.cy-=(e.clientY-drag.y)*k;drag={x:e.clientX,y:e.clientY};drawMap()});
+  var end=function(){drag=null};w.addEventListener("pointerup",end);w.addEventListener("pointercancel",end);
+  w.addEventListener("wheel",function(e){e.preventDefault();view.z=Math.min(5,Math.max(1,view.z*(e.deltaY<0?1.2:1/1.2)));drawMap()},{passive:false});
 }
 
 /* ================= INIT ================= */
 renderBookings();renderDays();renderOverview();
 var tips="";TIPS.forEach(function(t){tips+="<li>"+t+"</li>"});$("tiplist").innerHTML=tips;
+(function(){var links=[].slice.call(document.querySelectorAll("nav.top a"));
+ function upd(){var y=window.scrollY+90,cur=links[0];links.forEach(function(a){var t=document.querySelector(a.getAttribute("href"));if(t&&t.offsetTop<=y)cur=a});links.forEach(function(a){a.classList.toggle("on",a===cur)});if(cur&&cur.scrollIntoView&&cur.parentNode.parentNode.scrollWidth>cur.parentNode.parentNode.clientWidth){var u=cur.parentNode.parentNode;u.scrollLeft=cur.offsetLeft-u.clientWidth/2+cur.clientWidth/2}}
+ window.addEventListener("scroll",upd,{passive:true});upd()})();
 renderHero();
 setInterval(renderHero,1000);
 document.addEventListener("visibilitychange",renderHero);
