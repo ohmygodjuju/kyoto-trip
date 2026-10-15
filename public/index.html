@@ -131,10 +131,34 @@ li.sp{background:linear-gradient(90deg,var(--warn-soft),transparent 60%);margin:
 .tips li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--lav)}
 .tips b{color:var(--g-d)}
 footer{text-align:center;margin-top:34px;color:var(--sub);font-size:13px}
+
+nav.top{overflow:visible}
+.ddb{display:block;white-space:nowrap;border:0;background:transparent;font:600 14px/1.4 inherit;font-family:inherit;padding:6px 12px;border-radius:999px;color:var(--sub);cursor:pointer}
+.ddb.on{background:var(--g);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ddb.on{color:#14200c}}
+.ddb::after{content:" ▾";font-size:11px}
+.ddb[aria-expanded="true"]::after{content:" ▴"}
+.ddp{position:absolute;left:16px;right:16px;top:calc(100% + 6px);max-width:420px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:6px;display:none}
+.ddp.open{display:block}
+nav.top .ddp a{color:var(--ink);font-weight:500;display:grid;grid-template-columns:54px 1fr;gap:8px;align-items:baseline;text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14.5px}
+.ddp a b{font-variant-numeric:tabular-nums;color:var(--c)}
+nav.top .ddp a.on{background:var(--g-soft);color:var(--ink)}
+details.fold{scroll-margin-top:64px}
+details.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary h2{margin:0;flex:1}
+details.fold>summary::after{content:"＋";font-size:18px;color:var(--g-d);padding:0 4px}
+details.fold[open]>summary::after{content:"－"}
+details.fold[open]>summary{margin-bottom:12px}
+.mask{position:fixed;inset:0;z-index:100;background:rgba(20,26,16,.45);display:none;align-items:center;justify-content:center;padding:24px}
+.mask.open{display:flex}
+.dlg{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:20px;max-width:340px;width:100%}
+.dlg p{font-size:16px;font-weight:600;margin-bottom:16px;line-height:1.5}
+.dlg .acts{padding:0;justify-content:flex-end}
 </style>
 </head>
 <body>
-<nav class="top"><div class="in"><ul id="navl"></ul><button class="lang" id="langbtn" type="button" aria-label="Language">EN</button></div></nav>
+<nav class="top"><div class="in"><ul id="navl"></ul><button class="lang" id="langbtn" type="button" aria-label="Language">EN</button></div><div class="ddp" id="ddp"></div></nav>
 <div class="wrap">
 <header>
   <h1 id="h1"></h1>
@@ -143,14 +167,18 @@ footer{text-align:center;margin-top:34px;color:var(--sub);font-size:13px}
 
 <div id="hero" class="card hero"></div>
 
-<section id="sum-sec">
-  <h2><span class="bar"></span><span id="t-sum"></span></h2>
-  <div class="sumlist" id="sumlist"></div>
+<section>
+  <details class="fold" id="sum-sec">
+    <summary><h2><span class="bar"></span><span id="t-sum"></span></h2></summary>
+    <div class="sumlist" id="sumlist"></div>
+  </details>
 </section>
 
-<section id="bookings">
-  <h2><span class="bar"></span><span id="t-bk"></span></h2>
-  <div class="bk" id="bk"></div>
+<section>
+  <details class="fold" id="bookings">
+    <summary><h2><span class="bar"></span><span id="t-bk"></span></h2></summary>
+    <div class="bk" id="bk"></div>
+  </details>
 </section>
 
 <section id="days">
@@ -172,6 +200,7 @@ footer{text-align:center;margin-top:34px;color:var(--sub);font-size:13px}
 
 <footer id="foot"></footer>
 </div>
+<div class="mask" id="mask"><div class="dlg" role="dialog" aria-modal="true"><p id="dmsg"></p><div class="acts"><button type="button" class="btn" id="dno"></button><button type="button" class="btn solid" id="dyes"></button></div></div></div>
 
 <script>
 "use strict";
@@ -209,7 +238,9 @@ var U={
  syncNote:["狀態存在這支手機的瀏覽器。要讓另一個人同步，按「複製同步連結」傳給對方，對方開啟連結即可。","Your choices are saved in this phone's browser. To sync with your travel partner, copy the sync link and send it; opening it applies the same choices."],
  foot:["旅途愉快，記得多買一點抹茶。","Safe travels, and buy a little extra matcha."],
  todoL:[["預先備好入境手續（Visit Japan Web）","Prepare entry procedures ahead (Visit Japan Web)"],["購買 JR Haruka 車票或交通卡","Buy a JR Haruka ticket or an IC card"],["核對各抹茶店在 12/18 到 12/22 的營業時間","Check each matcha shop's hours for Dec 18–22"],["確認行李存放地點","Confirm where to leave luggage"]],
- stops:["個停靠點","stops"]
+ stops:["個停靠點","stops"],
+ nDays:["行程","Days"],yes:["確認","Confirm"],no:["取消","Cancel"],
+ cfmClear:["要清除所有「已買到」標記嗎？","Clear all “bought” marks?"]
 };
 var WD={"12/18":["五","Fri"],"12/19":["六","Sat"],"12/20":["日","Sun"],"12/21":["一","Mon"],"12/22":["二","Tue"]};
 
@@ -278,7 +309,7 @@ var DAYS=[
   {t:"12:00",p:"uji",ti:["午餐・宇治市區","Lunch in Uji"],ds:["抹茶蕎麥麵或宇治茶料理，自由選擇。","Matcha soba or Uji tea cuisine, your pick."]},
   {t:"13:30",p:"ito",s:1,mv:["步行 約 5 分","Walk ~5 min"],ti:["伊藤久右衛門 JR 宇治站前店","Itohkyuemon, JR Uji Station Store"],ds:["站前店，下車即到。營業時間以店家公告為準。","Right by the station. Check the shop's posted hours."],buys:["ito"],needs:["ito"]},
   {t:"14:30",p:"uji",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["宇治散步（平等院表參道、宇治橋）","Uji stroll (Byodoin approach, Uji Bridge)"],ds:["時間充裕再逛。","If time allows."]},
-  {t:"16:30",p:"hosaka",s:1,mv:["電車 約 75 分","Train ~75 min"],ti:["前往大阪（難波）","Head to Osaka (Namba)"],ds:["宇治到難波約 1 小時 15 分（JR 轉乘，或京阪線轉御堂筋線）。行李已寄到飯店。","Uji to Namba takes about 1h15 (JR with a transfer, or Keihan then Midosuji Line). Your bags are already going to the hotel."]},
+  {t:"16:30",p:"hosaka",s:1,mv:["京阪＋地鐵 約 70 分","Keihan + subway ~70 min"],ti:["前往大阪（京阪電車）","Head to Osaka (Keihan Railway)"],ds:["京阪宇治站搭京阪宇治線到中書島，轉京阪本線到淀屋橋，再搭御堂筋線到難波，車費約 ¥730，比 JR 便宜。京阪宇治站與 JR 宇治站是不同車站，步行約 10 分。行李已寄到飯店。","From Keihan Uji Station take the Uji Line to Chushojima, change to the Keihan Main Line to Yodoyabashi, then the Midosuji Line to Namba. About ¥730, cheaper than JR. Keihan Uji and JR Uji are different stations, roughly a 10-minute walk apart. Your bags are already on their way to the hotel."]},
   {t:"18:00",p:"hosaka",ti:["大阪飯店入住","Check in at the Osaka hotel"],ds:["入住時間 14:00 起。行李應已在下午 4:00 前送到，請向櫃檯確認。","Check-in from 14:00. Your bags should have arrived by 4:00 PM; confirm at the desk."]},
   {t:"19:30",p:"doto",p2:"shin",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["晚餐・道頓堀、心齋橋筋","Dinner: Dotonbori & Shinsaibashi-suji"],ds:["簡短夜遊，早點休息。","A short night out, then an early rest."]}
  ]},
@@ -509,7 +540,9 @@ function applySkips(){
 }
 function bindShop(e){
   var b=e.target.closest("button[data-shop]");if(!b)return;
-  var k=b.getAttribute("data-shop");bought[k]=bought[k]?0:1;saveBought();applySkips();
+  var k=b.getAttribute("data-shop"),nm=T(SHOPS[k]);
+  var msg=bought[k]?(lang==="en"?"Remove the bought mark for “"+nm+"”?":"要取消「"+nm+"」的已買到標記嗎？"):(lang==="en"?"Mark “"+nm+"” as bought?":"確認「"+nm+"」已買到？");
+  confirmBox(msg,function(){bought[k]=bought[k]?0:1;saveBought();applySkips()});
 }
 function syncUrl(){
   var s=Object.keys(bought).filter(function(k){return bought[k]}).join(",");
@@ -522,26 +555,43 @@ function bindMT(){
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){window.prompt(T(U.copy),u)})}
     else{window.prompt(T(U.copy),u)}
   };
-  x.onclick=function(){bought={};saveBought();try{history.replaceState(null,"",location.pathname)}catch(e){}applySkips()};
+  x.onclick=function(){confirmBox(T(U.cfmClear),function(){bought={};saveBought();try{history.replaceState(null,"",location.pathname)}catch(e){}applySkips()})};
 }
 
 /* ================= NAV ================= */
 function renderNav(){
   var items=[["#hero",T(U.nNow)],["#sum-sec",T(U.nSum)],["#bookings",T(U.nBk)]];
-  DAYS.forEach(function(d,i){items.push(["#day-"+(i+1),d.date,1])});
-  items.push(["#todo",T(U.nTodo)],["#tips",T(U.nTips)]);
-  $("navl").innerHTML=items.map(function(x){return '<li><a href="'+x[0]+'"'+(x[2]?' class="dy"':'')+'>'+esc(x[1])+'</a></li>'}).join("");
+  var h=items.map(function(x){return '<li><a href="'+x[0]+'">'+esc(x[1])+'</a></li>'}).join("");
+  h+='<li><button type="button" class="ddb" id="ddbtn" aria-expanded="false" aria-haspopup="true">'+esc(T(U.nDays))+'</button></li>';
+  h+=[["#todo",T(U.nTodo)],["#tips",T(U.nTips)]].map(function(x){return '<li><a href="'+x[0]+'">'+esc(x[1])+'</a></li>'}).join("");
+  $("navl").innerHTML=h;
+  $("ddp").innerHTML=DAYS.map(function(d,i){return '<a href="#day-'+(i+1)+'" style="--c:'+COLORS[i]+'"><b>'+d.date+'</b><span>'+esc(T(d.title))+'</span></a>'}).join("");
   $("langbtn").textContent=lang==="en"?"繁":"EN";
+  $("ddbtn").onclick=function(e){e.stopPropagation();toggleDD()};
+}
+function toggleDD(force){
+  var p=$("ddp"),open=force===undefined?!p.classList.contains("open"):force;
+  p.classList.toggle("open",open);$("ddbtn").setAttribute("aria-expanded",open?"true":"false");
 }
 var navLinks=[];
+var NAVIDS=["hero","sum-sec","bookings","day-1","day-2","day-3","day-4","day-5","todo","tips"];
 function navUpdate(){
-  if(!navLinks.length)return;
-  var y=window.scrollY+90,cur=navLinks[0];
-  navLinks.forEach(function(a){var t=document.querySelector(a.getAttribute("href"));if(t&&t.getBoundingClientRect().top+window.scrollY<=y)cur=a});
-  navLinks.forEach(function(a){a.classList.toggle("on",a===cur)});
-  var u=$("navl");
-  if(u.scrollWidth>u.clientWidth){u.scrollLeft=cur.offsetLeft-u.clientWidth/2+cur.clientWidth/2}
+  var y=window.scrollY+90,cur="hero";
+  NAVIDS.forEach(function(id){var t=$(id);if(t&&t.getBoundingClientRect().top+window.scrollY<=y)cur=id});
+  var isDay=cur.indexOf("day-")===0;
+  navLinks.forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+cur)});
+  var bt=$("ddbtn");if(bt){bt.classList.toggle("on",isDay);}
+  [].forEach.call(document.querySelectorAll("#ddp a"),function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+cur)});
+  var u=$("navl"),el=isDay?bt:u.querySelector('a[href="#'+cur+'"]');
+  if(el&&u.scrollWidth>u.clientWidth){u.scrollLeft=el.offsetLeft-u.clientWidth/2+el.clientWidth/2}
 }
+/* confirm dialog */
+var dlgYes=null;
+function confirmBox(msg,yes){
+  dlgYes=yes;$("dmsg").textContent=msg;$("dyes").textContent=T(U.yes);$("dno").textContent=T(U.no);
+  $("mask").classList.add("open");$("dyes").focus();
+}
+function closeBox(){$("mask").classList.remove("open");dlgYes=null}
 
 /* ================= RENDER ALL ================= */
 function renderAll(){
@@ -556,7 +606,7 @@ function renderAll(){
   $("todolist").innerHTML=U.todoL.map(function(x){return "<li>"+esc(T(x))+"</li>"}).join("");
   $("tiplist").innerHTML=TIPS.map(function(x){return "<li>"+T(x)+"</li>"}).join("");
   renderNav();renderSummary();renderBookings();renderMT();renderDays();bindMT();
-  navLinks=[].slice.call(document.querySelectorAll("nav.top a"));
+  navLinks=[].slice.call(document.querySelectorAll("#navl a"));
   applySkips();navUpdate();
 }
 
@@ -565,6 +615,15 @@ loadBought();
 renderAll();
 $("langbtn").onclick=function(){lang=lang==="en"?"zh":"en";try{localStorage.setItem("kt-lang",lang)}catch(e){}heroKey=null;renderAll()};
 document.addEventListener("click",bindShop);
+$("dyes").onclick=function(){var f=dlgYes;closeBox();if(f)f()};
+$("dno").onclick=closeBox;
+$("mask").addEventListener("click",function(e){if(e.target===$("mask"))closeBox()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeBox();toggleDD(false)}});
+document.addEventListener("click",function(e){if(!e.target.closest("#ddp")&&!e.target.closest("#ddbtn"))toggleDD(false)});
+document.addEventListener("click",function(e){
+  var a=e.target.closest('nav.top a[href^="#"],#ddp a');if(!a)return;
+  var t=document.querySelector(a.getAttribute("href"));if(t&&t.tagName==="DETAILS")t.open=true;toggleDD(false);
+});
 window.addEventListener("scroll",navUpdate,{passive:true});
 window.addEventListener("hashchange",function(){if(/[#&]b=/.test(location.hash)){loadBought();applySkips()}});
 setInterval(function(){renderHero(false)},1000);
