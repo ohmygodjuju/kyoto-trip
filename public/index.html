@@ -23,18 +23,28 @@
   }
 }
 *{box-sizing:border-box;margin:0}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif;padding:0 16px calc(48px + env(safe-area-inset-bottom));overflow-x:hidden}
 .wrap{max-width:680px;margin:0 auto}
 a{color:inherit}
-header{padding:calc(28px + env(safe-area-inset-top)) 0 8px;position:relative}
+nav.top{position:sticky;top:0;z-index:50;margin:0 -16px;padding:calc(8px + env(safe-area-inset-top)) 16px 8px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.top .in{display:flex;align-items:center;gap:8px;max-width:680px;margin:0 auto}
+nav.top ul{list-style:none;padding:0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+nav.top ul::-webkit-scrollbar{display:none}
+nav.top a{display:block;white-space:nowrap;text-decoration:none;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;color:var(--sub)}
+nav.top a.on{background:var(--g);color:#fff}
+nav.top a.dy{font-variant-numeric:tabular-nums}
+nav.top .sep{width:1px;background:var(--line);margin:4px 4px;flex:none}
+.lang{flex:none;border:1.5px solid var(--g);background:var(--card);color:var(--g-d);border-radius:999px;font:700 13px/1 inherit;font-family:inherit;padding:8px 12px;cursor:pointer}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav.top a.on{color:#14200c}}
+section,#hero,.day{scroll-margin-top:64px}
+header{padding:20px 0 8px}
 header h1{font-size:26px;line-height:1.25;letter-spacing:.02em}
 header p{color:var(--sub);font-size:14px;margin-top:4px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px}
 section{margin-top:26px}
 h2{font-size:18px;margin:0 0 12px;display:flex;align-items:center;gap:8px;letter-spacing:.02em}
 h2 .bar{width:6px;height:20px;border-radius:3px;background:var(--g)}
-/* hero */
 .hero{background:linear-gradient(160deg,var(--g-soft),var(--card) 70%);margin-top:14px}
 .hero .lab{font-size:12px;letter-spacing:.14em;color:var(--g-d);font-weight:700}
 .hero h3{font-size:21px;line-height:1.35;margin:6px 0 2px}
@@ -47,11 +57,19 @@ h2 .bar{width:6px;height:20px;border-radius:3px;background:var(--g)}
 .btn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--g);color:var(--g-d);background:transparent;border-radius:999px;padding:7px 14px;font-size:14px;text-decoration:none;font-weight:600;cursor:pointer;font-family:inherit}
 .btn.solid{background:var(--g);color:#fff;border-color:var(--g)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.solid{color:#14200c}}
-/* map */
-.mapbox svg{width:100%;height:auto;display:block}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin-top:10px}
-.legend i{display:inline-block;width:18px;height:5px;border-radius:3px;vertical-align:middle;margin-right:5px}
 .note{font-size:12.5px;color:var(--sub);margin-top:8px}
+/* summary */
+.sumlist{display:grid;gap:12px}
+a.sum{display:block;text-decoration:none;border-left:6px solid var(--c)}
+.sum .n{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--c)}
+.sum h3{font-size:17px;line-height:1.35}
+.sum .rg{font-size:13px;color:var(--sub);margin-top:2px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;margin-top:10px;font-size:13.5px}
+.chain .st{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:1px 8px;white-space:nowrap}
+.chain .mvt{font-size:11.5px;color:var(--sub);white-space:nowrap}
+.chain .mvt::before{content:"› "}
+.chain .mvt::after{content:" ›"}
+.skip .st,.chain .skip{text-decoration:line-through;opacity:.5}
 /* bookings */
 .bk{display:grid;gap:12px}
 .bk .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -65,6 +83,14 @@ h2 .bar{width:6px;height:20px;border-radius:3px;background:var(--g)}
 .fl .mid{flex:1;text-align:center;font-size:12px;color:var(--sub);border-bottom:2px dotted var(--line);padding-bottom:2px}
 .kv{font-size:14px;color:var(--sub)}
 .kv b{color:var(--ink);font-weight:600}
+/* matcha tracker */
+.mt{margin-bottom:14px}
+.mt h4{font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 13px;font:600 14px/1.2 inherit;font-family:inherit;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--g);border-color:var(--g);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip[aria-pressed="true"]{color:#14200c}}
+.mini{margin-top:6px;margin-right:6px}
 /* days */
 .day{margin-bottom:14px;padding:0;overflow:hidden}
 .dh{padding:16px 18px 12px;border-left:6px solid var(--c)}
@@ -86,13 +112,16 @@ details.rm svg{width:100%;height:auto;display:block;margin-bottom:12px;border-ra
 .tl .tm small{display:block;font-weight:500;font-size:11px;color:var(--sub)}
 .tl .ti{font-weight:650;font-size:15.5px;line-height:1.4}
 .tl .ds{font-size:13.5px;color:var(--sub);margin-top:2px}
-.tl .go{display:inline-block;margin-top:5px;font-size:13px;color:var(--g-d);font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--g)}
+.tl .mv{font-size:12px;color:var(--sub);margin-top:2px}
+.tl .go{display:inline-block;margin-top:5px;margin-right:8px;font-size:13px;color:var(--g-d);font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--g)}
+li.skip .ti,li.skip .ds{text-decoration:line-through;opacity:.5}
+li.skip .sk{display:inline-block}
+.sk{display:none;font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px;margin-left:6px;background:var(--g-soft);color:var(--g-d)}
 .badge{display:inline-block;font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:2px}
 .badge.book{background:var(--warn-soft);color:var(--warn)}
 .badge.warn{background:var(--lav-soft);color:#6b58b0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge.warn{color:#cbbff0}}
 li.sp{background:linear-gradient(90deg,var(--warn-soft),transparent 60%);margin:0 -18px;padding-left:18px;padding-right:18px}
-/* todo + tips */
 .todo{list-style:none;padding:0}
 .todo li{padding:11px 0 11px 22px;border-bottom:1px dashed var(--line);position:relative}
 .todo li:last-child{border-bottom:0}
@@ -102,193 +131,231 @@ li.sp{background:linear-gradient(90deg,var(--warn-soft),transparent 60%);margin:
 .tips li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--lav)}
 .tips b{color:var(--g-d)}
 footer{text-align:center;margin-top:34px;color:var(--sub);font-size:13px}
-
-nav.top{position:sticky;top:0;z-index:50;margin:0 -16px;padding:calc(8px + env(safe-area-inset-top)) 16px 8px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav.top ul{list-style:none;padding:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;max-width:680px;margin:0 auto}
-nav.top ul::-webkit-scrollbar{display:none}
-nav.top a{display:block;white-space:nowrap;text-decoration:none;font-size:14px;font-weight:600;padding:6px 13px;border-radius:999px;color:var(--sub)}
-nav.top a.on{background:var(--g);color:#fff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav.top a.on{color:#14200c}}
-section,#hero{scroll-margin-top:64px}
-header{padding-top:20px}
-.mapwrap{position:relative;border-radius:14px;overflow:hidden;touch-action:none;background:#efe9d6}
-.mapwrap svg{width:100%;height:auto;display:block;aspect-ratio:372/400;cursor:grab}
-.zoom{position:absolute;right:10px;bottom:10px;display:grid;gap:8px}
-.zoom button{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;box-shadow:var(--shadow)}
-.compass{position:absolute;right:10px;top:10px;width:42px;height:42px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--sub);box-shadow:var(--shadow)}
-.mapwrap .hint{position:absolute;left:10px;bottom:8px;font-size:11px;color:var(--sub);background:color-mix(in srgb,var(--card) 80%,transparent);padding:2px 8px;border-radius:8px}
 </style>
 </head>
 <body>
-<nav class="top"><ul id="navl"><li><a href="#hero">此刻</a></li><li><a href="#map-sec">路線</a></li><li><a href="#bookings">預訂</a></li><li><a href="#days">行程</a></li><li><a href="#todo">待辦</a></li><li><a href="#tips">提醒</a></li></ul></nav>
+<nav class="top"><div class="in"><ul id="navl"></ul><button class="lang" id="langbtn" type="button" aria-label="Language">EN</button></div></nav>
 <div class="wrap">
 <header>
-  <h1>京都・宇治・大阪<br>旅行手冊</h1>
-  <p>2026/12/18（五）– 12/22（二） ・ 2 人 ・ 抹茶、逛街、散步</p>
+  <h1 id="h1"></h1>
+  <p id="hsub"></p>
 </header>
 
 <div id="hero" class="card hero"></div>
 
-<section id="map-sec">
-  <h2><span class="bar"></span>路線總覽</h2>
-  <div class="card mapbox">
-    <div class="mapwrap" id="mapwrap"><svg viewBox="0 0 372 400" role="img" aria-label="京都、宇治、大阪與關西機場的路線圖" id="overview"></svg><div class="compass" aria-hidden="true">北 ↑</div><div class="zoom"><button type="button" id="zin" aria-label="放大">+</button><button type="button" id="zout" aria-label="縮小">−</button></div></div>
-    <div class="legend" id="legend"></div>
-    <p class="note">路線依實際座標簡化繪製，可拖曳、放大查看。本行程不搭新幹線，使用的是 JR（Haruka、奈良線、京都線）與大阪地鐵御堂筋線。</p>
-  </div>
+<section id="sum-sec">
+  <h2><span class="bar"></span><span id="t-sum"></span></h2>
+  <div class="sumlist" id="sumlist"></div>
 </section>
 
 <section id="bookings">
-  <h2><span class="bar"></span>已確認的預訂</h2>
+  <h2><span class="bar"></span><span id="t-bk"></span></h2>
   <div class="bk" id="bk"></div>
 </section>
 
 <section id="days">
-  <h2><span class="bar"></span>每日行程</h2>
-  <p class="note" style="margin:-6px 0 12px">點地點名稱下方的「導航」會開啟 Google 地圖（大眾運輸）。<span class="badge book" style="margin-left:2px">需預約</span> 與 <span class="badge warn" style="margin-left:2px">留意</span> 是事先需要處理或容易出狀況的項目。</p>
+  <h2><span class="bar"></span><span id="t-days"></span></h2>
+  <div class="card mt" id="mt"></div>
+  <p class="note" style="margin:0 0 12px" id="daynote"></p>
   <div id="daylist"></div>
 </section>
 
 <section id="todo">
-  <h2><span class="bar"></span>待辦事項</h2>
-  <div class="card"><ul class="todo">
-    <li>預先備好入境手續（Visit Japan Web）</li>
-    <li>購買 JR Haruka 車票或交通卡</li>
-    <li>核對各抹茶店在 12/18 到 12/22 的營業時間</li>
-    <li>確認行李存放地點</li>
-  </ul></div>
+  <h2><span class="bar"></span><span id="t-todo"></span></h2>
+  <div class="card"><ul class="todo" id="todolist"></ul></div>
 </section>
 
 <section id="tips">
-  <h2><span class="bar"></span>實用小提醒</h2>
+  <h2><span class="bar"></span><span id="t-tips"></span></h2>
   <div class="card"><ul class="tips" id="tiplist"></ul></div>
 </section>
 
-<footer>
-  旅途愉快，記得多買一點抹茶。
-</footer>
+<footer id="foot"></footer>
 </div>
 
 <script>
 "use strict";
+/* ================= LANGUAGE ================= */
+var lang="zh";
+try{var sl=localStorage.getItem("kt-lang");if(sl==="en"||sl==="zh")lang=sl}catch(e){}
+function T(a){return typeof a==="string"?a:a[lang==="en"?1:0]}
+var U={
+ title:["京都・宇治・大阪 旅行手冊","Kyoto · Uji · Osaka Trip Handbook"],
+ sub:["2026/12/18（五）– 12/22（二）・2 人・抹茶、逛街、散步","Dec 18 (Fri) – Dec 22 (Tue), 2026 · 2 travelers · matcha, shopping, strolling"],
+ now:["此刻關注","UP NEXT"],
+ jp:["日本時間","Japan time"],tw:["台灣時間","Taiwan time"],
+ d:["天","days"],h:["時","hrs"],m:["分","min"],s:["秒","sec"],
+ navTo:["導航到 ","Navigate to "],
+ devTime:["你目前裝置的時間","Your device time"],
+ done:["旅程圓滿結束","Trip complete"],doneSub:["謝謝這趟旅程，歡迎回家。","Thanks for the journey. Welcome home."],
+ sum:["每日摘要","Daily Summary"],
+ bk:["已確認的預訂","Confirmed Bookings"],
+ days:["每日行程","Daily Itinerary"],
+ todo:["待辦事項","To-do"],
+ tips:["實用小提醒","Good to Know"],
+ nSum:["摘要","Summary"],nBk:["預訂","Bookings"],nTodo:["待辦","To-do"],nTips:["提醒","Tips"],nNow:["此刻","Now"],
+ daynote:["點「導航」會開啟 Google 地圖（大眾運輸）。<span class=\"badge book\" style=\"margin-left:2px\">需預約</span> 與 <span class=\"badge warn\" style=\"margin-left:2px\">留意</span> 是事先需要處理或容易出狀況的項目。","Tap “Navigate” to open Google Maps (transit). <span class=\"badge book\" style=\"margin-left:2px\">Book ahead</span> and <span class=\"badge warn\" style=\"margin-left:2px\">Note</span> mark items to arrange in advance or that can go wrong."],
+ book:["需預約","Book ahead"],warn:["留意","Note"],
+ flight:["航班","Flight"],stay:["住宿","Stay"],
+ tigerair:["台灣虎航","Tigerair Taiwan"],
+ checkin:["入住","Check-in"],checkout:["退房","Check-out"],tel:["電話","Phone"],navHotel:["導航到飯店","Navigate to hotel"],
+ allNav:["一鍵導航整天行程","Navigate the whole day"],
+ route:["展開當日路線圖","Show the day's route"],
+ routeNote:["示意圖，依大略座標繪製。一鍵導航最多帶入 10 個停靠點。","Sketch based on approximate coordinates. Whole-day navigation carries up to 10 stops."],
+ mtTitle:["抹茶採買進度","Matcha shopping progress"],
+ mtHint:["買到了就點一下，後面對應的行程會畫刪除線（時間不變）。","Tap a shop once you've bought there. The matching stops get struck through (times stay as they are)."],
+ bought:["已買到","Bought"],skipTag:["已買到，可略過","Bought, can skip"],
+ copy:["複製同步連結","Copy sync link"],copied:["已複製","Copied"],clear:["全部清除","Clear all"],
+ syncNote:["狀態存在這支手機的瀏覽器。要讓另一個人同步，按「複製同步連結」傳給對方，對方開啟連結即可。","Your choices are saved in this phone's browser. To sync with your travel partner, copy the sync link and send it; opening it applies the same choices."],
+ foot:["旅途愉快，記得多買一點抹茶。","Safe travels, and buy a little extra matcha."],
+ todoL:[["預先備好入境手續（Visit Japan Web）","Prepare entry procedures ahead (Visit Japan Web)"],["購買 JR Haruka 車票或交通卡","Buy a JR Haruka ticket or an IC card"],["核對各抹茶店在 12/18 到 12/22 的營業時間","Check each matcha shop's hours for Dec 18–22"],["確認行李存放地點","Confirm where to leave luggage"]],
+ stops:["個停靠點","stops"]
+};
+var WD={"12/18":["五","Fri"],"12/19":["六","Sat"],"12/20":["日","Sun"],"12/21":["一","Mon"],"12/22":["二","Tue"]};
+
 /* ================= DATA ================= */
 var JP="+09:00",TW="+08:00";
 var COLORS=["var(--d1)","var(--d2)","var(--d3)","var(--d4)","var(--d5)"];
+var SHOPS={ippodo:["一保堂","Ippodo"],koyamaen:["小山園","Marukyu Koyamaen"],yugen:["YUGEN","YUGEN"],tokichi:["中村藤吉","Nakamura Tokichi"],ito:["伊藤久右衛門","Itohkyuemon"]};
+var SHOPORDER=["ippodo","koyamaen","yugen","tokichi","ito"];
 var P={
- tpe:{n:"桃園國際機場 第一航廈",q:"桃園國際機場第一航廈",ll:[25.0777,121.2328]},
- kix:{n:"關西國際機場 第一航廈",q:"Kansai International Airport Terminal 1",ll:[34.4320,135.2304]},
- hk:{n:"ホテルミュッセ京都四条河原町名鉄",q:"ホテルミュッセ京都四条河原町名鉄 京都市中京区奈良屋町301-1",ll:[35.0037,135.7689]},
- hosaka:{n:"ホテルグレイスリー大阪なんば",q:"ホテルグレイスリー大阪なんば 大阪市浪速区元町1-4-4",ll:[34.6650,135.4975]},
- kyst:{n:"京都車站",q:"京都駅",ll:[34.9858,135.7588]},
- ippodo:{n:"一保堂茶舗 京都本店",q:"一保堂茶舗 京都本店 京都市中京区寺町通二条上ル常盤木町52",ll:[35.0124,135.7667]},
- loft:{n:"Loftman 1981（寺町）",q:"Loftman 1981 京都 寺町",ll:[35.0052,135.7680]},
- ohana:{n:"LOFTMAN COOP 'Ohana（寺町通）",q:"LOFTMAN COOP 'Ohana 京都 寺町通",ll:[35.0058,135.7678]},
- yugen:{n:"YUGEN 京都",q:"YUGEN 京都 日本茶 京都市中京区亀屋町146",ll:[35.0100,135.7650]},
- kani:{n:"かに道楽 京都本店",q:"かに道楽 京都本店",ll:[35.0105,135.7690]},
- taka:{n:"京都高島屋",q:"京都高島屋",ll:[35.0037,135.7694]},
- uji:{n:"JR 宇治站",q:"JR宇治駅",ll:[34.8893,135.8076]},
- toki:{n:"中村藤吉本店（宇治）",q:"中村藤吉本店 宇治市宇治壱番十番地",ll:[34.8903,135.8070]},
- ito:{n:"伊藤久右衛門 JR 宇治站前店",q:"伊藤久右衛門 JR宇治駅前店 宇治市宇治宇文字16-1",ll:[34.8896,135.8072]},
- doto:{n:"道頓堀",q:"道頓堀 グリコサイン",ll:[34.6687,135.5013]},
- shin:{n:"心齋橋筋商店街",q:"心斎橋筋商店街",ll:[34.6733,135.5014]},
- castle:{n:"大阪城公園・天守閣",q:"大阪城天守閣",ll:[34.6873,135.5262]},
- shiten:{n:"四天王寺",q:"四天王寺",ll:[34.6542,135.5164]},
- tsu:{n:"通天閣・新世界",q:"通天閣",ll:[34.6525,135.5063]},
- ameri:{n:"美國村",q:"アメリカ村 大阪",ll:[34.6727,135.4985]},
- orange:{n:"橘子街",q:"オレンジストリート 大阪",ll:[34.6735,135.4990]},
- yasaka:{n:"難波八阪神社",q:"難波八阪神社 大阪市浪速区元町2-9-19",ll:[34.6618,135.4965]},
- kuro:{n:"黑門市場",q:"黒門市場",ll:[34.6643,135.5064]},
- shinosaka:{n:"新大阪站",q:"新大阪駅",ll:[34.7335,135.5002]},
- tight:{n:"Tightbooth（SHRED 旗艦店）",q:"TIGHTBOOTH SHRED 大阪市淀川区西宮原2-6-16",ll:[34.7260,135.4950]}
+ tpe:{n:["桃園國際機場 第一航廈","Taoyuan Airport T1"],q:"桃園國際機場第一航廈",ll:[25.0777,121.2328]},
+ kix:{n:["關西國際機場 第一航廈","Kansai Airport T1"],q:"Kansai International Airport Terminal 1",ll:[34.4320,135.2304]},
+ hk:{n:["ホテルミュッセ京都四条河原町名鉄","Hotel Musse Kyoto Shijo Kawaramachi Meitetsu"],q:"ホテルミュッセ京都四条河原町名鉄 京都市中京区奈良屋町301-1",ll:[35.0037,135.7689]},
+ hosaka:{n:["ホテルグレイスリー大阪なんば","Hotel Gracery Osaka Namba"],q:"ホテルグレイスリー大阪なんば 大阪市浪速区元町1-4-4",ll:[34.6650,135.4975]},
+ kyst:{n:["京都車站","Kyoto Station"],q:"京都駅",ll:[34.9858,135.7588]},
+ ippodo:{n:["一保堂茶舗 京都本店","Ippodo Tea, Kyoto Main Store"],q:"一保堂茶舗 京都本店 京都市中京区寺町通二条上ル常盤木町52",ll:[35.0124,135.7667]},
+ loft:{n:["Loftman 1981（寺町）","Loftman 1981 (Teramachi)"],q:"Loftman 1981 京都 寺町",ll:[35.0052,135.7680]},
+ ohana:{n:["LOFTMAN COOP 'Ohana","LOFTMAN COOP 'Ohana"],q:"LOFTMAN COOP 'Ohana 京都 寺町通",ll:[35.0058,135.7678]},
+ fushimi:{n:["伏見稻荷大社","Fushimi Inari Taisha"],q:"伏見稲荷大社",ll:[34.9671,135.7727]},
+ kiyo:{n:["清水寺","Kiyomizu-dera"],q:"清水寺",ll:[34.9949,135.7850]},
+ ninen:{n:["二年坂・三年坂","Ninenzaka & Sannenzaka"],q:"二年坂 京都",ll:[34.9985,135.7807]},
+ gion:{n:["祇園・花見小路","Gion & Hanamikoji"],q:"花見小路通",ll:[35.0036,135.7757]},
+ yugen:{n:["YUGEN 京都","YUGEN Kyoto"],q:"YUGEN 京都 日本茶 604-0865 京都市中京区亀屋町146",ll:[35.0100,135.7650]},
+ kani:{n:["かに道楽 京都本店","Kani Doraku Kyoto Main Store"],q:"かに道楽 京都本店",ll:[35.0105,135.7690]},
+ taka:{n:["京都高島屋","Kyoto Takashimaya"],q:"京都高島屋",ll:[35.0037,135.7694]},
+ uji:{n:["JR 宇治站","JR Uji Station"],q:"JR宇治駅",ll:[34.8893,135.8076]},
+ toki:{n:["中村藤吉本店（宇治）","Nakamura Tokichi Honten (Uji)"],q:"中村藤吉本店 宇治市宇治壱番十番地",ll:[34.8903,135.8070]},
+ ito:{n:["伊藤久右衛門 JR 宇治站前店","Itohkyuemon, JR Uji Station Store"],q:"伊藤久右衛門 JR宇治駅前店 宇治市宇治宇文字16-1",ll:[34.8896,135.8072]},
+ doto:{n:["道頓堀","Dotonbori"],q:"道頓堀 グリコサイン",ll:[34.6687,135.5013]},
+ shin:{n:["心齋橋筋商店街","Shinsaibashi-suji"],q:"心斎橋筋商店街",ll:[34.6733,135.5014]},
+ castle:{n:["大阪城公園・天守閣","Osaka Castle Park & Keep"],q:"大阪城天守閣",ll:[34.6873,135.5262]},
+ shiten:{n:["四天王寺","Shitennoji"],q:"四天王寺",ll:[34.6542,135.5164]},
+ tsu:{n:["通天閣・新世界","Tsutenkaku & Shinsekai"],q:"通天閣",ll:[34.6525,135.5063]},
+ ameri:{n:["美國村","Amerikamura"],q:"アメリカ村 大阪",ll:[34.6727,135.4985]},
+ orange:{n:["橘子街","Orange Street"],q:"オレンジストリート 大阪",ll:[34.6735,135.4990]},
+ yasaka:{n:["難波八阪神社","Namba Yasaka Shrine"],q:"難波八阪神社 大阪市浪速区元町2-9-19",ll:[34.6618,135.4965]},
+ kuro:{n:["黑門市場","Kuromon Market"],q:"黒門市場",ll:[34.6643,135.5064]},
+ shinosaka:{n:["新大阪站","Shin-Osaka Station"],q:"新大阪駅",ll:[34.7335,135.5002]},
+ tight:{n:["Tightbooth（SHRED 旗艦店）","Tightbooth (SHRED flagship)"],q:"TIGHTBOOTH SHRED 大阪市淀川区西宮原2-6-16",ll:[34.7260,135.4950]}
 };
+/* item: t time, tz, p place, p2, s (in summary chain), mv [move from previous chain stop], ti title, ds desc, tag, buys[], needs[] */
 var DAYS=[
- {date:"12/18",wd:"五",title:"出發・抵達京都",sub:"早班機，下午入住後輕鬆逛寺町",lodge:"住宿：京都（四條河原町）",items:[
-  {t:"07:00",tz:TW,title:"桃園機場起飛",d:"IT210，第一航廈。建議 05:00 前抵達機場。",p:"tpe",tag:"留意",tagk:"warn"},
-  {t:"10:25",tz:JP,title:"抵達關西機場",d:"入境、領行李後，往 JR 關西空港站。",p:"kix"},
-  {t:"11:45",title:"搭 JR Haruka 往京都",d:"約 80–90 分鐘。實際班次以當日時刻表為準。",p:"kyst",hint:"以 JR 京都站為終點"},
-  {t:"13:30",title:"午餐・把行李寄放飯店",d:"15:00 才能辦理入住，先寄放行李。",p:"hk"},
-  {t:"15:00",title:"辦理入住",d:"入住時間 15:00–24:00。",p:"hk"},
-  {t:"15:45",title:"一保堂茶舗 京都本店",d:"營業至 17:00，請把握時間，不要太晚出發。",p:"ippodo",tag:"留意",tagk:"warn"},
-  {t:"17:15",title:"寺町通逛街：Loftman 1981、'Ohana",d:"Needles 在京都的取扱店。營業時間請出發前確認。",p:"loft",p2:"ohana"},
-  {t:"19:00",title:"晚餐・河原町、先斗町周邊",d:"自由安排。",p:"hk"}
+ {date:"12/18",title:["出發・抵達京都","Depart · Arrive in Kyoto"],sub:["早班機，下午入住後輕鬆逛寺町","Early flight, then an easy Teramachi stroll after check-in"],lodge:["住宿：京都（四條河原町）","Stay: Kyoto (Shijo-Kawaramachi)"],items:[
+  {t:"07:00",tz:TW,p:"tpe",s:1,ti:["桃園機場起飛","Depart Taoyuan (TPE)"],ds:["IT210，第一航廈。建議 05:00 前抵達機場。","IT210, Terminal 1. Aim to be at the airport by 05:00."],tag:"warn"},
+  {t:"10:25",tz:JP,p:"kix",s:1,mv:["飛行 2 小時 25 分","Flight 2h25m"],ti:["抵達關西機場","Arrive at Kansai Airport (KIX)"],ds:["入境、領行李後，往 JR 關西空港站。","After immigration and baggage claim, head to JR Kansai-airport Station."]},
+  {t:"11:45",p:"kyst",s:1,mv:["JR Haruka 約 80–90 分","JR Haruka ~80–90 min"],ti:["搭 JR Haruka 往京都","JR Haruka to Kyoto"],ds:["實際班次以當日時刻表為準。","Check the day's timetable for actual departures."]},
+  {t:"13:30",p:"hk",s:1,mv:["電車或步行 約 15 分","Subway/walk ~15 min"],ti:["午餐・寄放行李","Lunch · drop off bags"],ds:["15:00 才能入住，先把行李寄放櫃檯。","Check-in opens at 15:00; leave your bags at the front desk."]},
+  {t:"15:00",p:"hk",ti:["辦理入住","Check in"],ds:["入住時間 15:00–24:00。","Check-in 15:00–24:00."]},
+  {t:"15:45",p:"ippodo",s:1,mv:["步行 約 12 分","Walk ~12 min"],ti:["一保堂茶舗 京都本店","Ippodo Tea, Kyoto Main Store"],ds:["營業到 17:00，別太晚出發。","Open until 17:00, so don't start late."],tag:"warn",buys:["ippodo"],needs:["ippodo"]},
+  {t:"17:15",p:"loft",p2:"ohana",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["寺町通逛街：Loftman 1981、'Ohana","Teramachi shopping: Loftman 1981 & 'Ohana"],ds:["Needles 在京都的取扱店，營業時間出發前先確認。","Needles stockists in Kyoto; check opening hours before you go."]},
+  {t:"19:00",p:"hk",s:1,mv:["步行 約 5 分","Walk ~5 min"],ti:["晚餐・河原町、先斗町周邊","Dinner around Kawaramachi & Pontocho"],ds:["自由安排。","Your choice."]}
  ]},
- {date:"12/19",wd:"六",title:"京都市區・抹茶與螃蟹",sub:"步調輕鬆，保留彈性時間",lodge:"住宿：京都（四條河原町）",items:[
-  {t:"11:00",title:"YUGEN 京都",d:"11:00 開門。週四公休，出發前請再核對官網。",p:"yugen",tag:"留意",tagk:"warn"},
-  {t:"12:30",title:"午餐：かに道楽 京都本店",d:"11:00–22:00。假日午餐時段人多，建議事先電話預約 075-211-0671。",p:"kani",tag:"需預約",tagk:"book"},
-  {t:"14:30",title:"京都高島屋",d:"店內有一保堂、小山園等茶品櫃位，可補買茶葉。10:30–20:00。",p:"taka"},
-  {t:"16:00",title:"錦市場、寺町、新京極自由逛",d:"可順路回飯店放東西，再出門吃晚餐。",p:"hk"},
-  {t:"19:00",title:"晚餐・自由安排",d:"",p:"hk"}
+ {date:"12/19",title:["京都東山・市區","Kyoto: Higashiyama & Downtown"],sub:["從伏見稻荷開始，一路往北逛到市區","Start at Fushimi Inari and work north into town"],lodge:["住宿：京都（四條河原町）","Stay: Kyoto (Shijo-Kawaramachi)"],items:[
+  {t:"08:00",p:"fushimi",s:1,mv:["京阪 約 20 分","Keihan ~20 min"],ti:["伏見稻荷大社","Fushimi Inari Taisha"],ds:["從祇園四條站搭京阪線前往，神社全天開放，早上人少。","Take the Keihan Line from Gion-Shijo. The shrine is open all day and quieter in the morning."]},
+  {t:"10:15",p:"kiyo",s:1,mv:["京阪＋步行 約 30 分","Keihan + walk ~30 min"],ti:["清水寺","Kiyomizu-dera"],ds:["從清水五條站上山約 20 分鐘。冬季夜間特別參拜每年不同，開放時間請查官網。","About 20 min uphill from Kiyomizu-Gojo. Winter evening openings vary by year; check the official site."],tag:"warn"},
+  {t:"11:45",p:"ninen",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["二年坂・三年坂","Ninenzaka & Sannenzaka"],ds:["沿坡道往下逛，老街、伴手禮與甜點店很多。","Stroll downhill through old lanes lined with souvenir and sweets shops."]},
+  {t:"12:30",p:"gion",s:1,mv:["步行 約 15 分","Walk ~15 min"],ti:["祇園・花見小路","Gion & Hanamikoji"],ds:["","" ]},
+  {t:"13:15",p:"kani",s:1,mv:["京阪＋步行 約 15 分","Keihan + walk ~15 min"],ti:["午餐：かに道楽 京都本店","Lunch: Kani Doraku Kyoto Main Store"],ds:["11:00–22:00。假日午餐人多，建議電話預約 075-211-0671。","11:00–22:00. Weekend lunch is busy, so book by phone: 075-211-0671."],tag:"book"},
+  {t:"15:00",p:"yugen",s:1,mv:["步行 約 20 分","Walk ~20 min"],ti:["YUGEN","YUGEN"],ds:["地址：604-0865 京都市中京区亀屋町146。營業時間與公休日請出發前核對官網。","Address: 146 Kameyacho, Nakagyo-ku, Kyoto 604-0865. Check hours and closed days on the official site before going."],tag:"warn",buys:["yugen"],needs:["yugen"]},
+  {t:"16:30",p:"taka",s:1,mv:["步行或公車 約 20 分","Walk/bus ~20 min"],ti:["京都高島屋（茶品櫃位）","Kyoto Takashimaya (tea counters)"],ds:["地下食品區常有一保堂、小山園等櫃位，可補買。10:30–20:00。櫃位品項請現場確認。","The basement food floor often has Ippodo, Koyamaen and other tea counters. 10:30–20:00. Confirm the lineup in store."],buys:["ippodo","koyamaen"],needs:["ippodo","koyamaen"]},
+  {t:"19:00",p:"hk",s:1,mv:["步行 約 5 分","Walk ~5 min"],ti:["晚餐・自由安排","Dinner, your choice"],ds:["",""]}
  ]},
- {date:"12/20",wd:"日",title:"宇治抹茶日・移動大阪",sub:"早出發，傍晚轉移到大阪",lodge:"住宿：大阪（難波）",items:[
-  {t:"08:30",title:"退房，行李放京都車站投幣式置物櫃",d:"退房時間最晚 11:00。週日置物櫃容易早早客滿，請提早到，行李箱大的話留意櫃子尺寸。",p:"kyst",tag:"留意",tagk:"warn"},
-  {t:"09:15",title:"JR 奈良線往宇治",d:"京都站到宇治站約 20–30 分鐘。",p:"uji"},
-  {t:"10:00",title:"中村藤吉本店",d:"10:00–17:30（咖啡座最後點餐 16:30），不接受預約，現場候位。距 JR 宇治站南口約 2 分鐘。",p:"toki",tag:"留意",tagk:"warn"},
-  {t:"12:30",title:"午餐・宇治市區",d:"抹茶蕎麥麵或宇治茶料理，自由選擇。",p:"uji"},
-  {t:"14:00",title:"伊藤久右衛門 JR 宇治站前店",d:"站前店，下車即到。營業時間以店家公告為準。",p:"ito"},
-  {t:"15:00",title:"宇治散步",d:"平等院表參道一帶，時間充裕再逛。",p:"uji"},
-  {t:"17:00",title:"回京都車站取行李，搭 JR 往大阪",d:"JR 京都線新快速約 30 分鐘。",p:"kyst"},
-  {t:"18:30",title:"大阪飯店入住",d:"入住 14:00 起。",p:"hosaka"},
-  {t:"19:30",title:"晚餐・道頓堀、心齋橋筋",d:"簡短夜遊，早點休息。",p:"doto",p2:"shin"}
+ {date:"12/20",title:["宇治抹茶日・移動大阪","Uji Matcha Day · On to Osaka"],sub:["行李先寄到大阪，輕裝去宇治","Send bags ahead to Osaka and visit Uji light"],lodge:["住宿：大阪（難波）","Stay: Osaka (Namba)"],items:[
+  {t:"08:00",p:"hk",s:1,ti:["退房，行李交給櫃檯寄送","Check out; hand bags to the front desk"],ds:["Suitcase Express Japan：當天上午 10:00 前把行李放在飯店櫃檯，保證下午 4:00 前送到大阪飯店。需事先在平台預約，填入兩間飯店名稱與住客姓名（羅馬拼音），並回覆確認信。訂單至少要有一件大行李箱，背包與購物袋免費。易碎品請隨身帶。","Suitcase Express Japan: leave bags at the front desk by 10:00 AM; delivery to the Osaka hotel is guaranteed by 4:00 PM. Book ahead on the platform, enter both hotel names and the guest name (Roman letters), and reply to the confirmation email. The order needs at least one large suitcase; backpacks and shopping bags go free. Carry fragile items yourself."],tag:"book"},
+  {t:"08:45",p:"uji",s:1,mv:["電車＋JR 奈良線 約 45 分","Subway/walk + JR Nara Line ~45 min"],ti:["前往宇治（JR 奈良線）","Head to Uji (JR Nara Line)"],ds:["從京都車站搭 JR 奈良線到宇治站。","Take the JR Nara Line from Kyoto Station to Uji."]},
+  {t:"10:00",p:"toki",s:1,mv:["步行 約 2 分","Walk ~2 min"],ti:["中村藤吉本店","Nakamura Tokichi Honten"],ds:["10:00–17:30（咖啡座最後點餐 16:30），不接受預約，現場候位。距 JR 宇治站南口約 2 分鐘。","10:00–17:30 (café last order 16:30). No reservations, so join the line on site. About 2 min from the JR Uji south exit."],tag:"warn",buys:["tokichi"],needs:["tokichi"]},
+  {t:"12:00",p:"uji",ti:["午餐・宇治市區","Lunch in Uji"],ds:["抹茶蕎麥麵或宇治茶料理，自由選擇。","Matcha soba or Uji tea cuisine, your pick."]},
+  {t:"13:30",p:"ito",s:1,mv:["步行 約 5 分","Walk ~5 min"],ti:["伊藤久右衛門 JR 宇治站前店","Itohkyuemon, JR Uji Station Store"],ds:["站前店，下車即到。營業時間以店家公告為準。","Right by the station. Check the shop's posted hours."],buys:["ito"],needs:["ito"]},
+  {t:"14:30",p:"uji",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["宇治散步（平等院表參道、宇治橋）","Uji stroll (Byodoin approach, Uji Bridge)"],ds:["時間充裕再逛。","If time allows."]},
+  {t:"16:30",p:"hosaka",s:1,mv:["電車 約 75 分","Train ~75 min"],ti:["前往大阪（難波）","Head to Osaka (Namba)"],ds:["宇治到難波約 1 小時 15 分（JR 轉乘，或京阪線轉御堂筋線）。行李已寄到飯店。","Uji to Namba takes about 1h15 (JR with a transfer, or Keihan then Midosuji Line). Your bags are already going to the hotel."]},
+  {t:"18:00",p:"hosaka",ti:["大阪飯店入住","Check in at the Osaka hotel"],ds:["入住時間 14:00 起。行李應已在下午 4:00 前送到，請向櫃檯確認。","Check-in from 14:00. Your bags should have arrived by 4:00 PM; confirm at the desk."]},
+  {t:"19:30",p:"doto",p2:"shin",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["晚餐・道頓堀、心齋橋筋","Dinner: Dotonbori & Shinsaibashi-suji"],ds:["簡短夜遊，早點休息。","A short night out, then an early rest."]}
  ]},
- {date:"12/21",wd:"一",title:"大阪經典一日",sub:"城、寺、新世界，下午逛美國村",lodge:"住宿：大阪（難波）",items:[
-  {t:"09:00",title:"大阪城公園・天守閣",d:"天守閣約 17:00 關閉，建議上午先去。",p:"castle",tag:"留意",tagk:"warn"},
-  {t:"11:30",title:"四天王寺",d:"中心伽藍冬季約 8:30–16:00。12/21 是弘法大師緣日，有市集，人潮較多。",p:"shiten",tag:"留意",tagk:"warn"},
-  {t:"13:30",title:"通天閣・新世界午餐",d:"串炸、章魚燒。展望台為付費，費用與時間請現場確認。",p:"tsu"},
-  {t:"15:30",title:"美國村・橘子街",d:"服飾、二手店與咖啡。",p:"ameri",p2:"orange"},
-  {t:"16:30",title:"難波八阪神社",d:"境內開放 6:00–17:00，請在 17:00 前抵達。",p:"yasaka",tag:"留意",tagk:"warn"},
-  {t:"18:30",title:"晚餐・道頓堀",d:"自由安排。",p:"doto"}
+ {date:"12/21",title:["大阪經典一日","Classic Osaka Day"],sub:["城、寺、新世界，下午逛美國村","Castle, temple, Shinsekai, then Amerikamura"],lodge:["住宿：大阪（難波）","Stay: Osaka (Namba)"],items:[
+  {t:"08:00",p:"castle",s:1,mv:["地鐵 約 20 分","Subway ~20 min"],ti:["大阪城公園・天守閣","Osaka Castle Park & Keep"],ds:["天守閣約 17:00 關閉，建議上午先去。","The keep closes around 17:00, so go in the morning."],tag:"warn"},
+  {t:"10:30",p:"shiten",s:1,mv:["地鐵 約 15 分","Subway ~15 min"],ti:["四天王寺","Shitennoji"],ds:["中心伽藍冬季約 8:30–16:00。12/21 是弘法大師緣日，有市集，人潮較多。","Central precinct about 8:30–16:00 in winter. Dec 21 is a monthly market day (Kobo-san), so expect crowds."],tag:"warn"},
+  {t:"12:30",p:"tsu",s:1,mv:["步行 約 15 分","Walk ~15 min"],ti:["通天閣・新世界午餐","Tsutenkaku & Shinsekai lunch"],ds:["串炸、章魚燒。展望台為付費，費用與時間請現場確認。","Kushikatsu and takoyaki. The observation deck is paid; confirm price and hours on site."]},
+  {t:"14:30",p:"ameri",p2:"orange",s:1,mv:["地鐵 約 15 分","Subway ~15 min"],ti:["美國村・橘子街","Amerikamura & Orange Street"],ds:["服飾、二手店與咖啡。","Fashion, vintage shops and cafés."]},
+  {t:"16:30",p:"yasaka",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["難波八阪神社","Namba Yasaka Shrine"],ds:["境內開放 6:00–17:00，請在 17:00 前抵達。","Grounds open 6:00–17:00; arrive before 17:00."],tag:"warn"},
+  {t:"18:00",p:"doto",s:1,mv:["步行 約 8 分","Walk ~8 min"],ti:["晚餐・道頓堀","Dinner in Dotonbori"],ds:["自由安排。","Your choice."]}
  ]},
- {date:"12/22",wd:"二",title:"最後採買・返程",d:"",sub:"最後一天時間緊，請按時移動",lodge:"傍晚飛回桃園",items:[
-  {t:"09:00",title:"黑門市場",d:"海鮮攤位多半約 16:30 前收，早去較新鮮。",p:"kuro"},
-  {t:"10:30",title:"回飯店取行李，11:00 前退房",d:"退房最晚 11:00。",p:"hosaka"},
-  {t:"11:00",title:"難波午餐與最後採買",d:"伴手禮、藥妝，退稅單據留意保存。",p:"doto"},
-  {t:"12:45",title:"御堂筋線往新大阪，行李先放置物櫃",d:"難波到新大阪約 20 分鐘。",p:"shinosaka"},
-  {t:"14:00",title:"Tightbooth（SHRED 旗艦店）",d:"平日 14:00 開門。週三公休，週二可去。",p:"tight",tag:"留意",tagk:"warn"},
-  {t:"15:15",title:"回新大阪站取行李，搭 JR Haruka 往關西機場",d:"約 50 分鐘。不要晚於 16:00 的班次。",p:"shinosaka",tag:"留意",tagk:"warn"},
-  {t:"17:00",title:"抵達關西機場，辦理退稅與報到",d:"退稅須在託運行李前完成。建議起飛前 2 小時抵達機場。",p:"kix",tag:"留意",tagk:"warn"},
-  {t:"18:55",tz:JP,title:"關西機場起飛",d:"IT213，第一航廈。",p:"kix"},
-  {t:"21:20",tz:TW,title:"抵達桃園機場",d:"歡迎回家。",p:"tpe"}
+ {date:"12/22",title:["最後採買・返程","Last Shopping · Heading Home"],sub:["時間緊，請按時移動","Tight timing, so keep to the schedule"],lodge:["傍晚飛回桃園","Evening flight back to Taipei"],items:[
+  {t:"08:00",p:"hosaka",ti:["早餐・整理行李","Breakfast · pack up"],ds:["","" ]},
+  {t:"09:00",p:"kuro",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["黑門市場","Kuromon Market"],ds:["海鮮攤位多半約 16:30 前收，建議早去。","Seafood stalls often close around 16:30, so go early."]},
+  {t:"10:30",p:"hosaka",s:1,mv:["步行 約 10 分","Walk ~10 min"],ti:["回飯店取行李，11:00 前退房","Back to the hotel for bags; check out by 11:00"],ds:["退房最晚 11:00。","Check-out is 11:00 at the latest."]},
+  {t:"11:00",p:"doto",s:1,mv:["步行 約 5 分","Walk ~5 min"],ti:["難波午餐與最後採買","Namba lunch & last-minute shopping"],ds:["伴手禮、藥妝，退稅單據請保存。","Souvenirs and drugstores; keep your tax-free receipts."]},
+  {t:"12:45",p:"shinosaka",s:1,mv:["御堂筋線 約 20 分","Midosuji Line ~20 min"],ti:["御堂筋線往新大阪，行李先放置物櫃","Midosuji Line to Shin-Osaka; stash bags in a locker"],ds:["難波到新大阪約 20 分鐘。","About 20 min from Namba to Shin-Osaka."]},
+  {t:"14:00",p:"tight",s:1,mv:["步行或計程車 約 15 分","Walk/taxi ~15 min"],ti:["Tightbooth（SHRED 旗艦店）","Tightbooth (SHRED flagship)"],ds:["平日 14:00 開門。週三公休，週二可去。","Opens 14:00 on weekdays. Closed Wednesdays, so Tuesday works."],tag:"warn"},
+  {t:"15:15",p:"shinosaka",s:1,mv:["步行或計程車 約 15 分","Walk/taxi ~15 min"],ti:["取行李，搭 JR Haruka 往關西機場","Collect bags; JR Haruka to Kansai Airport"],ds:["約 50 分鐘。不要晚於 16:00 的班次。","About 50 min. Don't take anything later than the 16:00 departure."],tag:"warn"},
+  {t:"17:00",p:"kix",s:1,mv:["JR Haruka 約 50 分","JR Haruka ~50 min"],ti:["抵達關西機場，辦理退稅與報到","Arrive at KIX; tax-free refund & check-in"],ds:["退稅須在託運行李前完成。建議起飛前 2 小時抵達機場。","Do the tax refund before checking bags. Aim to arrive 2 hours before departure."],tag:"warn"},
+  {t:"18:55",tz:JP,p:"kix",s:1,ti:["關西機場起飛","Depart Kansai Airport"],ds:["IT213，第一航廈。","IT213, Terminal 1."]},
+  {t:"21:20",tz:TW,p:"tpe",s:1,mv:["飛行 3 小時 25 分","Flight 3h25m"],ti:["抵達桃園機場","Arrive at Taoyuan"],ds:["歡迎回家。","Welcome home."]}
  ]}
 ];
 var TIPS=[
- "<b>退稅新制（2026/11/01 起）：</b>結帳時先付含稅價，離境時在機場退稅。同一天同一家店需滿 ¥5,000；請在託運行李前完成，並保留護照與商品。",
- "<b>營業時間：</b>抹茶店多半 17:00–18:30 就打烊，宇治更早，安排時請以下午為主。",
- "<b>行李：</b>12/20 京都車站置物櫃、12/22 新大阪站置物櫃都建議早點到，大行李箱可能要用大型櫃。",
- "<b>航空公司行李規定：</b>台灣虎航各票價的託運行李額度不同，買了很多抹茶與伴手禮，出發前請再確認自己的票價額度。",
- "<b>交通：</b>可使用 IC 卡（ICOCA、Suica 等）搭乘 JR 與地鐵、並在便利商店付款。Google 地圖查大眾運輸最準確。",
- "<b>現金：</b>小店與市場仍常常只收現金，建議帶足日圓。",
- "<b>天氣：</b>12 月京都、大阪早晚約 3–12 度，宇治靠河更冷，請帶保暖外套。",
- "<b>緊急聯絡：</b>外交部旅外國人急難救助全球免付費專線 +800-0885-0885（國際免付費）、國內專線 +886-800-085-095。"
+ ["<b>行李配送：</b>12/20 用 Suitcase Express Japan 把行李從京都寄到大阪飯店，上午 10:00 前交給櫃檯。每件最高賠償 ¥50,000，易碎品不賠，易碎品請隨身帶。","<b>Luggage delivery:</b> on Dec 20, Suitcase Express Japan moves your bags from the Kyoto to the Osaka hotel; hand them over by 10:00 AM. Compensation is up to ¥50,000 per item and fragile goods are not covered, so carry those yourself."],
+ ["<b>退稅新制（2026/11/01 起）：</b>結帳時先付含稅價，離境時在機場退稅。同一天同一家店需滿 ¥5,000；請在託運行李前完成，並保留護照與商品。","<b>New tax-free system (from Nov 1, 2026):</b> pay tax-inclusive at the register and claim the refund at departure. ¥5,000 minimum per shop per day. Do it before checking bags and keep your passport and goods with you."],
+ ["<b>營業時間：</b>抹茶店多半 17:00–18:30 就打烊，宇治更早，安排時請以下午為主。","<b>Opening hours:</b> matcha shops mostly close between 17:00 and 18:30, Uji earlier, so plan around the afternoon."],
+ ["<b>12/22 不要寄行李到機場：</b>退稅要帶著商品辦理，行李先寄走會有問題。","<b>Don't send bags to the airport on Dec 22:</b> the tax refund needs the goods with you, so shipping bags ahead causes trouble."],
+ ["<b>航空公司行李規定：</b>台灣虎航各票價的託運額度不同，買了很多抹茶與伴手禮，出發前請再確認自己的額度。","<b>Airline baggage:</b> Tigerair Taiwan allowances differ by fare. If you'll buy a lot of matcha and gifts, confirm your allowance before flying."],
+ ["<b>交通：</b>可使用 IC 卡（ICOCA、Suica 等）搭乘 JR 與地鐵，也能在便利商店付款。Google 地圖查大眾運輸最準確。","<b>Transport:</b> an IC card (ICOCA, Suica, etc.) works on JR and subways and in convenience stores. Google Maps is the most reliable for transit."],
+ ["<b>現金：</b>小店與市場仍常常只收現金，建議帶足日圓。","<b>Cash:</b> small shops and markets are often cash-only, so carry enough yen."],
+ ["<b>天氣：</b>12 月京都、大阪早晚約 3–12 度，宇治靠河更冷，請帶保暖外套。","<b>Weather:</b> Kyoto and Osaka run about 3–12°C in December; Uji by the river feels colder. Bring a warm coat."],
+ ["<b>緊急聯絡：</b>外交部旅外國人急難救助全球免付費專線 +800-0885-0885（國際免付費）、國內專線 +886-800-085-095。","<b>Emergency:</b> Taiwan MOFA overseas assistance, toll-free +800-0885-0885 (international) or +886-800-085-095."]
 ];
 var BOOK={
  flights:[
-  {no:"IT210",from:"桃園 TPE 第一航廈",to:"關西 KIX 第一航廈",dt:"12/18（五）",dep:"07:00",arr:"10:25",dz:"台灣時間",az:"日本時間",dur:"2 小時 25 分"},
-  {no:"IT213",from:"關西 KIX 第一航廈",to:"桃園 TPE 第一航廈",dt:"12/22（二）",dep:"18:55",arr:"21:20",dz:"日本時間",az:"台灣時間",dur:"3 小時 25 分"}
+  {no:"IT210",from:["桃園 TPE 第一航廈","Taoyuan TPE T1"],to:["關西 KIX 第一航廈","Kansai KIX T1"],dt:["12/18（五）","Fri, Dec 18"],dep:"07:00",arr:"10:25",dz:["台灣時間","Taiwan time"],az:["日本時間","Japan time"],dur:["2 小時 25 分","2h 25m"]},
+  {no:"IT213",from:["關西 KIX 第一航廈","Kansai KIX T1"],to:["桃園 TPE 第一航廈","Taoyuan TPE T1"],dt:["12/22（二）","Tue, Dec 22"],dep:"18:55",arr:"21:20",dz:["日本時間","Japan time"],az:["台灣時間","Taiwan time"],dur:["3 小時 25 分","3h 25m"]}
  ],
  hotels:[
-  {name:"ホテルミュッセ京都四条河原町名鉄",zh:"京都",addr:"〒604-8033 京都市中京区奈良屋町301-1",tel:"+81-75-241-3535",ci:"12/18 15:00–24:00",co:"12/20 05:00–11:00",nt:"2 晚，1 間房",p:"hk"},
-  {name:"ホテルグレイスリー大阪なんば",zh:"大阪",addr:"〒556-0016 大阪市浪速区元町1-4-4",tel:"+81-6-7639-9933",ci:"12/20 14:00 起",co:"12/22 11:00 前",nt:"2 晚，1 間房",p:"hosaka"}
+  {name:"ホテルミュッセ京都四条河原町名鉄",zh:["京都","Kyoto"],addr:"〒604-8033 京都市中京区奈良屋町301-1",tel:"+81-75-241-3535",ci:["12/18 15:00–24:00","Dec 18, 15:00–24:00"],co:["12/20 05:00–11:00","Dec 20, 05:00–11:00"],nt:["2 晚，1 間房","2 nights, 1 room"],p:"hk"},
+  {name:"ホテルグレイスリー大阪なんば",zh:["大阪","Osaka"],addr:"〒556-0016 大阪市浪速区元町1-4-4",tel:"+81-6-7639-9933",ci:["12/20 14:00 起","Dec 20, from 14:00"],co:["12/22 11:00 前","Dec 22, by 11:00"],nt:["2 晚，1 間房","2 nights, 1 room"],p:"hosaka"}
  ]
 };
-var ROUTE_LABELS=[
- "12/18 JR Haruka（關西機場→京都）","12/19 京都市區步行・公車","12/20 JR 奈良線（宇治）・JR 京都線（大阪）","12/21 大阪地鐵・步行","12/22 御堂筋線・JR Haruka"
-];
 
 /* ================= HELPERS ================= */
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function $(id){return document.getElementById(id)}
+function pad(n){return n<10?"0"+n:""+n}
 function navUrl(p){return "https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(P[p].q)+"&travelmode=transit"}
 function multiUrl(keys){
-  var seen=[],k;
-  keys.forEach(function(x){if(seen[seen.length-1]!==x)seen.push(x)});
+  var seen=[];keys.forEach(function(x){if(seen[seen.length-1]!==x)seen.push(x)});
+  if(!seen.length)return "https://www.google.com/maps";
   if(seen.length>10)seen=seen.slice(0,10);
   var dest=seen[seen.length-1],wp=seen.slice(0,-1).map(function(x){return P[x].q}).join("|");
   var u="https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(P[dest].q);
   if(wp)u+="&waypoints="+encodeURIComponent(wp);
   return u;
 }
-function pad(n){return n<10?"0"+n:""+n}
 function instant(day,it){return Date.parse("2026-"+day.date.replace("/","-")+"T"+it.t+":00"+(it.tz||JP))}
+function tzLabel(it){return T(it.tz===TW?U.tw:U.jp)}
+function wd(d){return T(WD[d.date])}
+function dateLabel(d){return lang==="en"?(d.date+" ("+wd(d)+")"):(d.date+"（"+wd(d)+"）")}
+
+/* ================= STATE: bought ================= */
+var bought={};
+function loadBought(){
+  var s="";
+  try{var h=location.hash.match(/[#&]b=([^&]*)/);if(h){s=decodeURIComponent(h[1]);try{localStorage.setItem("kt-bought",s)}catch(e){}}else s=localStorage.getItem("kt-bought")||""}catch(e){}
+  bought={};s.split(",").forEach(function(k){if(SHOPS[k])bought[k]=1});
+}
+function saveBought(){
+  var s=Object.keys(bought).filter(function(k){return bought[k]}).join(",");
+  try{localStorage.setItem("kt-bought",s)}catch(e){}
+}
+function isSkipped(it){return !!(it.needs&&it.needs.length&&it.needs.every(function(k){return bought[k]}))}
 
 /* ================= EVENTS ================= */
 var EVENTS=[];
@@ -300,30 +367,28 @@ function viewerLine(ts){
   try{
     var tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
     if(!tz||tz==="Asia/Tokyo")return "";
-    var f=new Intl.DateTimeFormat("zh-Hant",{timeZone:tz,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
-    return "你目前裝置的時間（"+tz+"）："+f.format(new Date(ts));
+    var f=new Intl.DateTimeFormat(lang==="en"?"en":"zh-Hant",{timeZone:tz,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+    return T(U.devTime)+" ("+tz+"): "+f.format(new Date(ts));
   }catch(e){return ""}
 }
-function tzLabel(it){return it.tz===TW?"台灣時間":"日本時間"}
-var heroState=null;
-function renderHero(){
+var heroKey=null;
+function renderHero(force){
   var now=Date.now(),nx=null,i;
-  for(i=0;i<EVENTS.length;i++){if(EVENTS[i].ts>now){nx=EVENTS[i];break}}
+  for(i=0;i<EVENTS.length;i++){if(EVENTS[i].ts>now&&!isSkipped(EVENTS[i].it)){nx=EVENTS[i];break}}
   var el=$("hero");
   if(!nx){
-    el.innerHTML='<div class="lab">此刻關注</div><h3>旅程圓滿結束</h3><p class="meta">謝謝這趟抹茶之旅，歡迎回家。</p>';
-    heroState=null;return;
+    el.innerHTML='<div class="lab">'+esc(T(U.now))+'</div><h3>'+esc(T(U.done))+'</h3><p class="meta">'+esc(T(U.doneSub))+'</p>';
+    heroKey=null;return;
   }
-  var key=nx.ts+nx.it.title;
-  if(heroState!==key){
-    heroState=key;
-    var u=navUrl(nx.it.p);
-    el.innerHTML='<div class="lab">此刻關注</div>'+
-     '<h3>'+esc(nx.it.title)+'</h3>'+
-     '<p class="meta">'+esc(nx.d.date)+'（'+nx.d.wd+'） '+esc(nx.it.t)+' '+tzLabel(nx.it)+'</p>'+
-     '<div class="cd" role="timer" aria-live="off"><div><b id="cd-d">0</b><span>天</span></div><div><b id="cd-h">00</b><span>時</span></div><div><b id="cd-m">00</b><span>分</span></div><div><b id="cd-s">00</b><span>秒</span></div></div>'+
+  var key=nx.ts+nx.it.ti[0]+lang;
+  if(force||heroKey!==key){
+    heroKey=key;
+    el.innerHTML='<div class="lab">'+esc(T(U.now))+'</div>'+
+     '<h3>'+esc(T(nx.it.ti))+'</h3>'+
+     '<p class="meta">'+esc(dateLabel(nx.d))+' '+esc(nx.it.t)+' '+esc(tzLabel(nx.it))+'</p>'+
+     '<div class="cd" role="timer" aria-live="off"><div><b id="cd-d">0</b><span>'+T(U.d)+'</span></div><div><b id="cd-h">00</b><span>'+T(U.h)+'</span></div><div><b id="cd-m">00</b><span>'+T(U.m)+'</span></div><div><b id="cd-s">00</b><span>'+T(U.s)+'</span></div></div>'+
      '<p class="loc" id="vl"></p>'+
-     '<p style="margin-top:10px"><a class="btn" target="_blank" rel="noopener" href="'+u+'">導航到 '+esc(P[nx.it.p].n)+'</a></p>';
+     '<p style="margin-top:10px"><a class="btn" target="_blank" rel="noopener" href="'+navUrl(nx.it.p)+'">'+esc(T(U.navTo)+T(P[nx.it.p].n))+'</a></p>';
     var v=viewerLine(nx.ts);$("vl").textContent=v;$("vl").style.display=v?"":"none";
   }
   var diff=Math.max(0,Math.floor((nx.ts-now)/1000));
@@ -331,21 +396,40 @@ function renderHero(){
   $("cd-d").textContent=d;$("cd-h").textContent=pad(h);$("cd-m").textContent=pad(m);$("cd-s").textContent=pad(s);
 }
 
+/* ================= SUMMARY ================= */
+function renderSummary(){
+  var h="";
+  DAYS.forEach(function(d,i){
+    var first=d.items[0],last=d.items[d.items.length-1];
+    var chain="",prev=null;
+    d.items.forEach(function(it){
+      if(!it.s)return;
+      var need=it.needs?' data-needs="'+it.needs.join(",")+'"':"";
+      if(prev&&it.mv)chain+='<span class="mvt">'+esc(T(it.mv))+'</span>';
+      chain+='<span class="st"'+need+'>'+esc(T(P[it.p].n).replace(/[（(].*/,""))+'</span>';
+      prev=it;
+    });
+    h+='<a class="card sum" style="--c:'+COLORS[i]+'" href="#day-'+(i+1)+'"><div class="n">DAY '+(i+1)+' ・ '+esc(dateLabel(d))+'</div><h3>'+esc(T(d.title))+'</h3>'+
+      '<p class="rg">'+esc(first.t+" → "+last.t+" ・ "+T(d.lodge))+'</p><div class="chain">'+chain+'</div></a>';
+  });
+  $("sumlist").innerHTML=h;
+}
+
 /* ================= BOOKINGS ================= */
 function renderBookings(){
   var h="";
   BOOK.flights.forEach(function(f){
-    h+='<div class="card"><div class="row"><div><span class="tag">航班</span><b>台灣虎航 '+f.no+'</b></div><div class="kv">'+f.dt+'</div></div>'+
-    '<div class="fl"><div class="t">'+f.dep+'<small>'+f.dz+'</small></div><div class="mid">'+f.dur+'</div><div class="t" style="text-align:right">'+f.arr+'<small>'+f.az+'</small></div></div>'+
-    '<div class="kv">'+esc(f.from)+' → '+esc(f.to)+'</div></div>';
+    h+='<div class="card"><div class="row"><div><span class="tag">'+esc(T(U.flight))+'</span><b>'+esc(T(U.tigerair))+' '+f.no+'</b></div><div class="kv">'+esc(T(f.dt))+'</div></div>'+
+    '<div class="fl"><div class="t">'+f.dep+'<small>'+esc(T(f.dz))+'</small></div><div class="mid">'+esc(T(f.dur))+'</div><div class="t" style="text-align:right">'+f.arr+'<small>'+esc(T(f.az))+'</small></div></div>'+
+    '<div class="kv">'+esc(T(f.from))+' → '+esc(T(f.to))+'</div></div>';
   });
   BOOK.hotels.forEach(function(x){
-    h+='<div class="card"><div class="row"><div><span class="tag lav">住宿</span><b>'+esc(x.zh)+'</b></div><div class="kv">'+x.nt+'</div></div>'+
+    h+='<div class="card"><div class="row"><div><span class="tag lav">'+esc(T(U.stay))+'</span><b>'+esc(T(x.zh))+'</b></div><div class="kv">'+esc(T(x.nt))+'</div></div>'+
     '<h4 style="margin-top:8px">'+esc(x.name)+'</h4>'+
     '<p class="kv">'+esc(x.addr)+'</p>'+
-    '<p class="kv"><b>入住</b> '+x.ci+'　<b>退房</b> '+x.co+'</p>'+
-    '<p class="kv"><b>電話</b> <a href="tel:'+x.tel.replace(/[^+\d]/g,"")+'">'+x.tel+'</a></p>'+
-    '<p style="margin-top:10px"><a class="btn" target="_blank" rel="noopener" href="'+navUrl(x.p)+'">導航到飯店</a></p></div>';
+    '<p class="kv"><b>'+esc(T(U.checkin))+'</b> '+esc(T(x.ci))+'　<b>'+esc(T(U.checkout))+'</b> '+esc(T(x.co))+'</p>'+
+    '<p class="kv"><b>'+esc(T(U.tel))+'</b> <a href="tel:'+x.tel.replace(/[^+\d]/g,"")+'">'+x.tel+'</a></p>'+
+    '<p style="margin-top:10px"><a class="btn" target="_blank" rel="noopener" href="'+navUrl(x.p)+'">'+esc(T(U.navHotel))+'</a></p></div>';
   });
   $("bk").innerHTML=h;
 }
@@ -353,6 +437,7 @@ function renderBookings(){
 /* ================= DAYS ================= */
 function dayRouteSvg(keys,color){
   var pts=[];keys.forEach(function(k){if(!pts.length||pts[pts.length-1]!==k)pts.push(k)});
+  if(pts.length<2)return "";
   var W=340,H=220,m=34;
   var lats=pts.map(function(k){return P[k].ll[0]}),lngs=pts.map(function(k){return P[k].ll[1]});
   var minLa=Math.min.apply(0,lats),maxLa=Math.max.apply(0,lats),minLn=Math.min.apply(0,lngs),maxLn=Math.max.apply(0,lngs);
@@ -362,114 +447,128 @@ function dayRouteSvg(keys,color){
   var ox=(W-w*sc)/2,oy=(H-h*sc)/2;
   var xy=pts.map(function(k){return [ox+(P[k].ll[1]-minLn)*kx*sc, oy+(maxLa-P[k].ll[0])*sc]});
   var d=xy.map(function(a,i){return (i?"L":"M")+a[0].toFixed(1)+","+a[1].toFixed(1)}).join(" ");
-  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="當日路線示意圖"><path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 7"/>';
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img"><path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
   xy.forEach(function(a,i){
     var lx=a[0]>W/2?-9:9,anchor=a[0]>W/2?"end":"start";
     s+='<circle cx="'+a[0].toFixed(1)+'" cy="'+a[1].toFixed(1)+'" r="9" fill="'+color+'" stroke="var(--card)" stroke-width="2"/><text x="'+a[0].toFixed(1)+'" y="'+(a[1]+4).toFixed(1)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">'+(i+1)+'</text>'+
-    '<text x="'+(a[0]+lx*1.9).toFixed(1)+'" y="'+(a[1]-10).toFixed(1)+'" text-anchor="'+anchor+'" font-size="10.5" fill="var(--ink)" stroke="var(--bg)" stroke-width="3" paint-order="stroke">'+esc(P[pts[i]].n.replace(/（.*/,""))+'</text>';
+    '<text x="'+(a[0]+lx*1.9).toFixed(1)+'" y="'+(a[1]-10).toFixed(1)+'" text-anchor="'+anchor+'" font-size="10.5" fill="var(--ink)" stroke="var(--bg)" stroke-width="3" paint-order="stroke">'+esc(T(P[pts[i]].n).replace(/[（(].*/,""))+'</text>';
   });
   return s+'</svg>';
+}
+function buyButtons(it){
+  if(!it.buys)return "";
+  return it.buys.map(function(k){
+    return '<button type="button" class="chip mini" data-shop="'+k+'" aria-pressed="false">'+esc(T(SHOPS[k])+" · "+T(U.bought))+'</button>';
+  }).join("");
+}
+function renderMT(){
+  var h='<h4>'+esc(T(U.mtTitle))+'</h4><p class="note" style="margin:2px 0 0">'+esc(T(U.mtHint))+'</p><div class="chips">';
+  SHOPORDER.forEach(function(k){h+='<button type="button" class="chip" data-shop="'+k+'" aria-pressed="false">'+esc(T(SHOPS[k]))+'</button>'});
+  h+='</div><div class="acts" style="padding:0"><button type="button" class="btn" id="cpy">'+esc(T(U.copy))+'</button><button type="button" class="btn" id="clr">'+esc(T(U.clear))+'</button></div><p class="note">'+esc(T(U.syncNote))+'</p>';
+  $("mt").innerHTML=h;
 }
 function renderDays(){
   var h="";
   DAYS.forEach(function(d,i){
-    var keys=[];
-    d.items.forEach(function(it){keys.push(it.p);if(it.p2)keys.push(it.p2)});
-    var navKeys=keys.filter(function(k){return k!=="tpe"});
-    var hasMap=navKeys.length>1;
-    h+='<article class="card day" style="--c:'+COLORS[i]+'">'+
-     '<div class="dh"><div class="n">DAY '+(i+1)+' ・ '+d.date+'（'+d.wd+'）</div><h3>'+esc(d.title)+'</h3><p class="sub">'+esc(d.sub)+'</p><p class="lodge">'+esc(d.lodge)+'</p></div>'+
-     '<div class="acts"><a class="btn solid" target="_blank" rel="noopener" href="'+multiUrl(navKeys)+'">一鍵導航整天行程</a></div>';
-    if(hasMap)h+='<details class="rm"><summary>展開當日路線圖</summary>'+dayRouteSvg(navKeys,COLORS[i])+'<p class="note" style="margin-top:-4px;padding-bottom:12px">示意圖，依大略座標繪製。一鍵導航最多帶入 10 個停靠點，Google 地圖多點路線採預設交通方式。</p></details>';
-    h+='<ul class="tl">';
+    h+='<article class="card day" id="day-'+(i+1)+'" style="--c:'+COLORS[i]+'">'+
+     '<div class="dh"><div class="n">DAY '+(i+1)+' ・ '+esc(dateLabel(d))+'</div><h3>'+esc(T(d.title))+'</h3><p class="sub">'+esc(T(d.sub))+'</p><p class="lodge">'+esc(T(d.lodge))+'</p></div>'+
+     '<div class="acts"><a class="btn solid" data-multi="'+i+'" target="_blank" rel="noopener" href="#">'+esc(T(U.allNav))+'</a></div>'+
+     '<details class="rm"><summary>'+esc(T(U.route))+'</summary><div data-rmap="'+i+'"></div><p class="note" style="margin-top:-4px;padding-bottom:12px">'+esc(T(U.routeNote))+'</p></details>'+
+     '<ul class="tl">';
     d.items.forEach(function(it){
-      var sp=it.tagk?" sp":"";
-      var tzn=(it.tz===TW)?"<small>台灣</small>":(it.tz===JP&&(it.t==="10:25"||it.t==="18:55")?"<small>日本</small>":"");
-      h+='<li class="'+(it.tagk==="book"?"sp":"")+'"><div class="tm">'+it.t+tzn+'</div><div><div class="ti">'+esc(it.title)+(it.tag?'<span class="badge '+it.tagk+'">'+it.tag+'</span>':'')+'</div>'+
-       (it.d?'<div class="ds">'+esc(it.d)+'</div>':'')+
-       '<a class="go" target="_blank" rel="noopener" href="'+navUrl(it.p)+'">導航：'+esc(P[it.p].n)+'</a>'+
-       (it.p2?' <a class="go" target="_blank" rel="noopener" href="'+navUrl(it.p2)+'">導航：'+esc(P[it.p2].n)+'</a>':'')+
+      var tzn=it.tz?'<small>'+esc(T(it.tz===TW?["台灣","Taiwan"]:["日本","Japan"]))+'</small>':"";
+      var need=it.needs?' data-needs="'+it.needs.join(",")+'"':"";
+      h+='<li class="'+(it.tag==="book"?"sp":"")+'"'+need+'><div class="tm">'+it.t+tzn+'</div><div><div class="ti">'+esc(T(it.ti))+(it.tag?'<span class="badge '+it.tag+'">'+esc(T(U[it.tag]))+'</span>':'')+'<span class="sk">'+esc(T(U.skipTag))+'</span></div>'+
+       (T(it.ds)?'<div class="ds">'+esc(T(it.ds))+'</div>':'')+
+       (it.mv?'<div class="mv">↓ '+esc(T(it.mv))+'</div>':'')+
+       '<a class="go" target="_blank" rel="noopener" href="'+navUrl(it.p)+'">'+esc(T(U.navTo.map?U.navTo:U.navTo).replace(/\s+$/,"")+" "+T(P[it.p].n))+'</a>'+
+       (it.p2?'<a class="go" target="_blank" rel="noopener" href="'+navUrl(it.p2)+'">'+esc(T(U.navTo).replace(/\s+$/,"")+" "+T(P[it.p2].n))+'</a>':'')+
+       (it.buys?'<div>'+buyButtons(it)+'</div>':'')+
        '</div></li>';
     });
     h+='</ul></article>';
   });
   $("daylist").innerHTML=h;
 }
-
-/* ================= OVERVIEW MAP ================= */
-var MW=372,MH=400,S0=526,LN0=135.12,LA0=35.12,KX=Math.cos(34.8*Math.PI/180);
-function mp(ll){return [(ll[1]-LN0)*KX*S0,(LA0-ll[0])*S0]}
-function poly(pts){return pts.map(function(q,i){var a=mp(q);return (i?"L":"M")+a[0].toFixed(1)+","+a[1].toFixed(1)}).join(" ")+"Z"}
-var BAY=[[34.30,135.05],[34.30,135.27],[34.41,135.30],[34.50,135.36],[34.58,135.45],[34.65,135.43],[34.72,135.40],[34.73,135.33],[34.69,135.19],[34.63,135.05]];
-var BIWA=[[35.14,135.94],[35.14,135.86],[35.07,135.84],[35.01,135.85],[34.99,135.88],[35.02,135.92],[35.07,135.94]];
-var ROUTES=[
- [[34.432,135.230],[34.43,135.29],[34.50,135.35],[34.5800,135.4600],[34.6467,135.5139],[34.7025,135.4959],[34.7335,135.5002],[34.9858,135.7588],[35.0037,135.7689]],
- [[35.0037,135.7689],[35.0100,135.7650],[35.0105,135.7690],[35.0037,135.7694],[35.0037,135.7689]],
- [[35.0037,135.7689],[34.9858,135.7588],[34.8893,135.8076],[34.8896,135.7990],[34.9858,135.7540],[34.7025,135.4930],[34.6650,135.4975]],
- [[34.6650,135.4975],[34.6873,135.5262],[34.6542,135.5164],[34.6525,135.5063],[34.6727,135.4985],[34.6618,135.4965],[34.6687,135.5013]],
- [[34.6650,135.4975],[34.6643,135.5064],[34.7335,135.5002],[34.7260,135.4950],[34.7335,135.5002],[34.6467,135.5139],[34.4320,135.2304]]
-];
-var LBL=[ /* name, ll, dx, dy, anchor, minor */
- ["京都",[34.9858,135.7588],-6,-6,"end",0],["宇治",[34.8893,135.8076],6,4,"start",0],["大阪",[34.7025,135.4959],-7,-4,"end",0],
- ["新大阪",[34.7335,135.5002],7,3,"start",0],["難波",[34.6650,135.4975],-8,12,"end",0],["關西機場",[34.4320,135.2304],8,4,"start",0],
- ["大阪城",[34.6873,135.5262],7,4,"start",1],["四天王寺",[34.6542,135.5164],7,4,"start",1],["通天閣",[34.6525,135.5063],7,10,"start",1],
- ["黑門市場",[34.6643,135.5064],7,0,"start",1],["Tightbooth",[34.7260,135.4950],-7,4,"end",1],["一保堂",[35.0124,135.7667],-7,-3,"end",1],
- ["YUGEN",[35.0100,135.7650],-7,4,"end",1],["蟹道樂",[35.0105,135.7690],7,-4,"start",1],["中村藤吉",[34.8903,135.8070],7,-6,"start",1]
-];
-var view={z:1,cx:MW/2,cy:MH/2};
-function clampView(){var vw=MW/view.z,vh=MH/view.z;view.cx=Math.min(Math.max(view.cx,vw/2),MW-vw/2);view.cy=Math.min(Math.max(view.cy,vh/2),MH-vh/2)}
-function drawMap(){
-  clampView();var z=view.z,vw=MW/z,vh=MH/z,x0=view.cx-vw/2,y0=view.cy-vh/2;
-  var el=$("overview");el.setAttribute("viewBox",x0.toFixed(1)+" "+y0.toFixed(1)+" "+vw.toFixed(1)+" "+vh.toFixed(1));
-  var fs=function(n){return (n/z).toFixed(2)};
-  var s='<rect x="0" y="0" width="'+MW+'" height="'+MH+'" fill="#f1ecd9"/>';
-  s+='<path d="'+poly(BAY)+'" fill="#cfe3ec" stroke="#a9c7d4" stroke-width="1" vector-effect="non-scaling-stroke"/>';
-  s+='<path d="'+poly(BIWA)+'" fill="#cfe3ec" stroke="#a9c7d4" stroke-width="1" vector-effect="non-scaling-stroke"/>';
-  s+='<text x="'+mp([34.46,135.12])[0]+'" y="'+mp([34.46,135.12])[1]+'" font-size="'+fs(11)+'" fill="#6f95a6" font-style="italic">大阪灣</text>';
-  s+='<text x="'+mp([35.08,135.88])[0]+'" y="'+mp([35.08,135.88])[1]+'" font-size="'+fs(11)+'" fill="#6f95a6" font-style="italic" text-anchor="middle">琵琶湖</text>';
-  ROUTES.forEach(function(r,i){
-    s+='<path d="'+r.map(function(q,j){var a=mp(q);return (j?"L":"M")+a[0].toFixed(1)+","+a[1].toFixed(1)}).join(" ")+'" fill="none" stroke="'+DAYC[i]+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"'+(i===4?' stroke-dasharray="6 4"':'')+'/>';
+function applySkips(){
+  [].forEach.call(document.querySelectorAll("[data-needs]"),function(el){
+    var need=el.getAttribute("data-needs").split(",");
+    var sk=need.every(function(k){return bought[k]});
+    el.classList.toggle("skip",sk);
   });
-  /* small stop dots */
-  Object.keys(P).forEach(function(k){var a=mp(P[k].ll);if(k==="tpe")return;s+='<circle cx="'+a[0].toFixed(1)+'" cy="'+a[1].toFixed(1)+'" r="'+fs(2.2)+'" fill="var(--card)" stroke="#5a6652" stroke-width="'+fs(1)+'"/>'});
-  /* labels */
-  s+='<g font-weight="700" stroke="#f1ecd9" stroke-width="'+fs(3)+'" paint-order="stroke" fill="#2a3325">';
-  LBL.forEach(function(l){if(l[5]&&z<2)return;var a=mp(l[1]);s+='<text x="'+(a[0]+l[2]/z).toFixed(1)+'" y="'+(a[1]+l[3]/z).toFixed(1)+'" font-size="'+fs(l[5]?10:12)+'" text-anchor="'+l[4]+'"'+(l[5]?' font-weight="500"':'')+'>'+l[0]+'</text>'});
-  s+='</g>';
-  /* house markers */
-  var house=function(ll,txt,col,dy){var a=mp(ll),r=fs(11);
-    return '<g transform="translate('+a[0].toFixed(1)+','+a[1].toFixed(1)+')"><rect x="'+(-11/z)+'" y="'+(-11/z)+'" width="'+(22/z)+'" height="'+(22/z)+'" rx="'+(6/z)+'" fill="#fff" stroke="'+col+'" stroke-width="'+fs(2)+'"/>'+
-    '<path d="M'+(-6/z)+','+(1/z)+' L0,'+(-6/z)+' L'+(6/z)+','+(1/z)+' M'+(-4.5/z)+','+(0)+' V'+(6/z)+' H'+(4.5/z)+' V0" fill="none" stroke="'+col+'" stroke-width="'+fs(1.8)+'" stroke-linejoin="round" stroke-linecap="round"/>'+
-    '<text x="0" y="'+(dy/z)+'" font-size="'+fs(10.5)+'" font-weight="700" text-anchor="middle" fill="#2a3325" stroke="#f1ecd9" stroke-width="'+fs(3)+'" paint-order="stroke">'+txt+'</text></g>'};
-  s+=house(P.hk.ll,"D1·D2",DAYC[0],-16);
-  s+=house(P.hosaka.ll,"D3·D4",DAYC[3],26);
-  /* airport */
-  var k=mp(P.kix.ll);s+='<g transform="translate('+k[0].toFixed(1)+','+k[1].toFixed(1)+')"><text x="0" y="'+(-9/z)+'" font-size="'+fs(10.5)+'" font-weight="700" text-anchor="middle" fill="#2a3325" stroke="#f1ecd9" stroke-width="'+fs(3)+'" paint-order="stroke">D1·D5</text></g>';
-  el.innerHTML=s;
+  [].forEach.call(document.querySelectorAll("button[data-shop]"),function(b){
+    b.setAttribute("aria-pressed",bought[b.getAttribute("data-shop")]?"true":"false");
+  });
+  DAYS.forEach(function(d,i){
+    var keys=[];
+    d.items.forEach(function(it){if(isSkipped(it))return;if(it.p!=="tpe"&&it.p!=="kix"||d.date!=="12/18"&&d.date!=="12/22")keys.push(it.p);if(it.p2)keys.push(it.p2)});
+    var a=document.querySelector('[data-multi="'+i+'"]');if(a)a.setAttribute("href",multiUrl(keys));
+    var m=document.querySelector('[data-rmap="'+i+'"]');if(m)m.innerHTML=dayRouteSvg(keys,COLORS[i]);
+  });
+  renderHero(true);
 }
-var DAYC=["#e2725b","#d9a441","#4f8a2e","#3f88b3","#8a77c4"];
-function renderOverview(){
-  drawMap();
-  var lg="";ROUTE_LABELS.forEach(function(t,i){lg+='<span><i style="background:'+DAYC[i]+';height:3px"></i>'+esc(t)+'</span>'});
-  $("legend").innerHTML=lg;
-  var w=$("mapwrap"),drag=null;
-  $("zin").onclick=function(){view.z=Math.min(5,view.z*1.6);drawMap()};
-  $("zout").onclick=function(){view.z=Math.max(1,view.z/1.6);drawMap()};
-  w.addEventListener("pointerdown",function(e){if(e.target.closest(".zoom"))return;drag={x:e.clientX,y:e.clientY};try{w.setPointerCapture(e.pointerId)}catch(_){}});
-  w.addEventListener("pointermove",function(e){if(!drag)return;var r=$("overview").getBoundingClientRect(),k=(MW/view.z)/r.width;view.cx-=(e.clientX-drag.x)*k;view.cy-=(e.clientY-drag.y)*k;drag={x:e.clientX,y:e.clientY};drawMap()});
-  var end=function(){drag=null};w.addEventListener("pointerup",end);w.addEventListener("pointercancel",end);
-  w.addEventListener("wheel",function(e){e.preventDefault();view.z=Math.min(5,Math.max(1,view.z*(e.deltaY<0?1.2:1/1.2)));drawMap()},{passive:false});
+function bindShop(e){
+  var b=e.target.closest("button[data-shop]");if(!b)return;
+  var k=b.getAttribute("data-shop");bought[k]=bought[k]?0:1;saveBought();applySkips();
+}
+function syncUrl(){
+  var s=Object.keys(bought).filter(function(k){return bought[k]}).join(",");
+  return location.origin+location.pathname+(s?"#b="+encodeURIComponent(s):"");
+}
+function bindMT(){
+  var c=$("cpy"),x=$("clr");
+  c.onclick=function(){
+    var u=syncUrl(),done=function(){c.textContent=T(U.copied);setTimeout(function(){c.textContent=T(U.copy)},1600)};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){window.prompt(T(U.copy),u)})}
+    else{window.prompt(T(U.copy),u)}
+  };
+  x.onclick=function(){bought={};saveBought();try{history.replaceState(null,"",location.pathname)}catch(e){}applySkips()};
+}
+
+/* ================= NAV ================= */
+function renderNav(){
+  var items=[["#hero",T(U.nNow)],["#sum-sec",T(U.nSum)],["#bookings",T(U.nBk)]];
+  DAYS.forEach(function(d,i){items.push(["#day-"+(i+1),d.date,1])});
+  items.push(["#todo",T(U.nTodo)],["#tips",T(U.nTips)]);
+  $("navl").innerHTML=items.map(function(x){return '<li><a href="'+x[0]+'"'+(x[2]?' class="dy"':'')+'>'+esc(x[1])+'</a></li>'}).join("");
+  $("langbtn").textContent=lang==="en"?"繁":"EN";
+}
+var navLinks=[];
+function navUpdate(){
+  if(!navLinks.length)return;
+  var y=window.scrollY+90,cur=navLinks[0];
+  navLinks.forEach(function(a){var t=document.querySelector(a.getAttribute("href"));if(t&&t.getBoundingClientRect().top+window.scrollY<=y)cur=a});
+  navLinks.forEach(function(a){a.classList.toggle("on",a===cur)});
+  var u=$("navl");
+  if(u.scrollWidth>u.clientWidth){u.scrollLeft=cur.offsetLeft-u.clientWidth/2+cur.clientWidth/2}
+}
+
+/* ================= RENDER ALL ================= */
+function renderAll(){
+  document.documentElement.lang=lang==="en"?"en":"zh-Hant";
+  document.title=T(U.title);
+  $("h1").innerHTML=lang==="en"?"Kyoto · Uji · Osaka<br>Trip Handbook":"京都・宇治・大阪<br>旅行手冊";
+  $("hsub").textContent=T(U.sub);
+  $("t-sum").textContent=T(U.sum);$("t-bk").textContent=T(U.bk);$("t-days").textContent=T(U.days);
+  $("t-todo").textContent=T(U.todo);$("t-tips").textContent=T(U.tips);
+  $("daynote").innerHTML=T(U.daynote);
+  $("foot").textContent=T(U.foot);
+  $("todolist").innerHTML=U.todoL.map(function(x){return "<li>"+esc(T(x))+"</li>"}).join("");
+  $("tiplist").innerHTML=TIPS.map(function(x){return "<li>"+T(x)+"</li>"}).join("");
+  renderNav();renderSummary();renderBookings();renderMT();renderDays();bindMT();
+  navLinks=[].slice.call(document.querySelectorAll("nav.top a"));
+  applySkips();navUpdate();
 }
 
 /* ================= INIT ================= */
-renderBookings();renderDays();renderOverview();
-var tips="";TIPS.forEach(function(t){tips+="<li>"+t+"</li>"});$("tiplist").innerHTML=tips;
-(function(){var links=[].slice.call(document.querySelectorAll("nav.top a"));
- function upd(){var y=window.scrollY+90,cur=links[0];links.forEach(function(a){var t=document.querySelector(a.getAttribute("href"));if(t&&t.offsetTop<=y)cur=a});links.forEach(function(a){a.classList.toggle("on",a===cur)});if(cur&&cur.scrollIntoView&&cur.parentNode.parentNode.scrollWidth>cur.parentNode.parentNode.clientWidth){var u=cur.parentNode.parentNode;u.scrollLeft=cur.offsetLeft-u.clientWidth/2+cur.clientWidth/2}}
- window.addEventListener("scroll",upd,{passive:true});upd()})();
-renderHero();
-setInterval(renderHero,1000);
-document.addEventListener("visibilitychange",renderHero);
+loadBought();
+renderAll();
+$("langbtn").onclick=function(){lang=lang==="en"?"zh":"en";try{localStorage.setItem("kt-lang",lang)}catch(e){}heroKey=null;renderAll()};
+document.addEventListener("click",bindShop);
+window.addEventListener("scroll",navUpdate,{passive:true});
+window.addEventListener("hashchange",function(){if(/[#&]b=/.test(location.hash)){loadBought();applySkips()}});
+setInterval(function(){renderHero(false)},1000);
+document.addEventListener("visibilitychange",function(){renderHero(false)});
 </script>
 </body>
 </html>
